@@ -1,0 +1,2975 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>三条河原町　部屋一覧</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sans:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --bg:#0B0E13;
+  --panel:#131820;
+  --panel-2:#171D26;
+  --ink:#0F141B;
+  --line:#242C38;
+  --line-2:#2E3846;
+  --text:#E7ECF3;
+  --muted:#96A1B1;
+  --dim:#7B8798;
+  --accent:#5B9CFF;
+  --ok:#35C98A;
+  --warn:#E2543C;
+  --amber:230,169,63;
+  --teal:63,195,163;
+  --violet:165,152,255;
+  --rose:228,121,143;
+  --sky:79,163,227;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{color-scheme:dark}
+body{
+  margin:0;min-height:100vh;background:var(--bg);color:var(--text);
+  font-family:var(--sans);font-size:14px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 420px at 6% -8%, rgba(91,156,255,.10), transparent 62%),
+    radial-gradient(760px 360px at 96% 4%, rgba(230,169,63,.08), transparent 60%),
+    linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+  background-size:auto,auto,34px 34px,34px 34px;
+}
+h1,h2,h3,p{margin:0}
+button{font:inherit;color:inherit}
+.mono{font-family:var(--mono)}
+
+/* ---------- layout ---------- */
+.app{display:grid;grid-template-columns:266px minmax(0,1fr);min-height:100vh}
+
+.rail{
+  border-right:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(23,29,38,.92),rgba(11,14,19,.92));
+  padding:26px 18px 22px;display:flex;flex-direction:column;gap:26px;
+  position:sticky;top:0;height:100vh;
+}
+.brand{display:flex;flex-direction:column;gap:10px}
+.brand-mark{
+  width:42px;height:42px;border-radius:4px;display:grid;place-items:center;
+  font-weight:900;font-size:20px;letter-spacing:.02em;color:#0B1017;
+  background:linear-gradient(160deg,#F0C46A,var(--amber));position:relative;
+}
+.brand-mark::after{content:"";position:absolute;inset:0;border-radius:4px;border-top:2px solid rgba(255,255,255,.5)}
+.brand-name{font-weight:900;font-size:16px;letter-spacing:.06em}
+.brand-sub{font-family:var(--mono);font-size:10px;letter-spacing:.22em;color:var(--dim);text-transform:uppercase}
+
+/* ---- モードタブ（2行固定でサイズが変わらない） ---- */
+.tabs{display:flex;flex-direction:column;gap:8px}
+.tab-group{display:flex;flex-direction:column;gap:8px}
+.tab{
+  text-align:center;background:transparent;border:1px solid transparent;border-radius:5px;
+  padding:10px 8px;cursor:pointer;position:relative;min-height:62px;width:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  transition:background .16s,border-color .16s;
+}
+.tab .tab-name{display:block;line-height:1.3;font-weight:700;font-size:14.5px;letter-spacing:.05em;color:var(--muted);white-space:nowrap}
+/* 設定ボタン（歯車） */
+.settings-tab{flex-direction:row;gap:7px;min-height:44px;color:var(--muted);letter-spacing:.04em;font-size:13px}
+.settings-tab .tab-gear{font-size:16px;line-height:1}
+.settings-tab .tab-label{font-weight:700}
+.settings-tab:hover{color:var(--text);background:rgba(255,255,255,.035);border-color:var(--line-2)}
+.settings-dot{position:absolute;top:9px;right:11px;width:7px;height:7px;border-radius:50%;background:var(--dim)}
+.settings-dot.ok{background:var(--ok)}
+.settings-dot.error{background:var(--warn)}
+.settings-dot.syncing{background:#E6A93F}
+.settings-actions{display:flex;gap:7px;flex-wrap:wrap}
+.tab-tail{display:flex;flex-direction:column;gap:8px}
+.nav-count{display:none}
+.nav-count .nc-label{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--dim)}
+.nav-count .nc-num{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text);line-height:1.15}
+.nav-count .nc-num small{color:var(--dim);font-weight:400}
+.tab::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:2px;border-radius:2px;background:transparent}
+.tab:hover{background:rgba(255,255,255,.035)}
+.tab[aria-selected="true"]{background:var(--panel-2);border-color:var(--line-2)}
+.tab[aria-selected="true"]::before{background:var(--accent)}
+.tab[aria-selected="true"] .tab-name{color:var(--text)}
+
+.coverage{margin-top:auto;border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:10px}
+.coverage-top{display:flex;align-items:baseline;justify-content:space-between}
+.coverage-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--dim);text-transform:uppercase}
+.coverage-num{font-family:var(--mono);font-weight:600;font-size:15px}
+.coverage-num small{color:var(--dim);font-weight:400}
+.bar{height:5px;border-radius:3px;background:#1C222C;overflow:hidden}
+.bar span{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,var(--teal),var(--accent));transition:width .35s ease}
+.rail-note{font-size:11.5px;line-height:1.7;color:var(--muted)}
+
+/* ---------- main ---------- */
+.main{padding:30px 32px 72px;min-width:0}
+.head{display:flex;flex-direction:column;gap:18px;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.head-top{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--dim);text-transform:uppercase;margin-bottom:8px}
+h1{font-weight:900;font-size:clamp(25px,3.1vw,38px);letter-spacing:.045em;line-height:1.15}
+.head-sub{margin-top:9px;color:var(--muted);font-size:13px;max-width:56ch}
+.head-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.mini{background:#0D1218;border:1px solid var(--line-2);border-radius:4px;color:var(--muted);padding:6px 10px;font-size:11.5px;letter-spacing:.02em;cursor:pointer;white-space:nowrap;transition:.15s;font-family:var(--sans)}
+.mini:hover{color:var(--text);border-color:var(--muted)}
+.mini#workResetBtn{border-color:rgba(53,201,138,.45);color:#6FE3AF}
+.seg{display:flex;border:1px solid var(--line-2);border-radius:5px;overflow:hidden;background:var(--ink)}
+.seg button{background:transparent;border:0;padding:8px 13px;font-size:12.5px;color:var(--muted);cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:rgba(91,156,255,.14);color:#CFE2FF}
+.stamp{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.04em}
+.legend{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.legend span{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted)}
+.legend i{width:8px;height:8px;border-radius:2px;background:rgb(var(--lh))}
+.field-title .fmt{font-family:var(--mono);font-size:10px;font-weight:400;color:var(--dim);margin-left:7px;letter-spacing:.06em}
+
+/* ---------- grid ---------- */
+.cell-icon{display:none;font-size:9px;line-height:1;margin-top:2px;font-family:var(--mono)}
+.cell.state-done .cell-icon{color:rgb(var(--h))}
+.cell.state-work .cell-icon{color:#6FE3AF}
+.cell.state-incident .cell-icon{color:#FF9B86}
+.floors{display:flex;flex-direction:column;gap:16px}
+.floor{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px}
+.floor-tag{
+  display:flex;align-items:center;justify-content:center;border-radius:5px;
+  background:rgba(var(--h),.06);border:1px solid rgba(var(--h),.22);
+  color:rgb(var(--h));font-weight:700;font-size:19px;letter-spacing:.16em;
+  writing-mode:vertical-rl;padding:8px 0;
+}
+.floor-tag em{font-style:normal;font-size:12px;opacity:.7;letter-spacing:.1em}
+.floor-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.cells{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:8px}
+
+.cell{
+  --h:139,123,232;
+  position:relative;aspect-ratio:4/3.15;border:1px solid var(--line);border-radius:4px;
+  background:linear-gradient(180deg,#151B24,#11161D);
+  padding:9px 9px 8px;display:flex;flex-direction:column;align-items:flex-start;
+  cursor:pointer;text-align:left;overflow:hidden;
+  transition:transform .16s ease,border-color .16s,box-shadow .16s,opacity .2s;
+}
+.cell::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:rgba(var(--h),.45)}
+.cell:hover{transform:translateY(-2px);border-color:rgba(var(--h),.5);box-shadow:0 8px 22px rgba(0,0,0,.42)}
+.cell:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.cell.state-done{border-color:rgba(var(--h),.3);background:linear-gradient(180deg,rgba(var(--h),.12),rgba(var(--h),.03) 62%),#11161D}
+.cell.state-done::before{background:rgb(var(--h));box-shadow:0 0 12px rgba(var(--h),.55)}
+.cell.state-todo::before{background:repeating-linear-gradient(90deg,rgba(255,255,255,.22) 0 5px,transparent 5px 10px)}
+.cell.dimmed{opacity:.24;filter:saturate(.35)}
+.cell-no{font-family:var(--mono);font-weight:600;font-size:clamp(15px,1.55vw,21px);letter-spacing:.03em;color:#9FABBC;margin-top:2px}
+.cell.state-done .cell-no{color:var(--text)}
+.cell-meta{
+  margin-top:auto;font-family:var(--mono);font-size:10.5px;line-height:1.45;color:var(--muted);
+  max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.cell-meta b{color:rgb(var(--h));font-weight:600}
+.cell-flag{
+  position:absolute;top:8px;right:8px;font-family:var(--mono);font-size:9px;letter-spacing:.08em;
+  padding:2px 5px;border-radius:3px;border:1px solid var(--line-2);color:var(--dim);background:var(--ink);
+}
+.cell.state-done .cell-flag{border-color:rgba(var(--h),.45);color:rgb(var(--h))}
+.cell.state-todo .cell-meta{color:#93A0B2}
+.cell.ghost{border-style:dashed;border-color:rgba(255,255,255,.055);background:transparent;cursor:default;pointer-events:none}
+.cell.ghost::before{background:transparent;box-shadow:none}
+.cell.ghost:hover{transform:none;box-shadow:none;border-color:rgba(255,255,255,.055)}
+.cell.wmode{--h:120,132,148}
+.cell.wmode .cell-no{color:#B9C3D2}
+.cell.wmode .cell-flag{color:#94A1B2}
+.cell.state-work{--h:53,201,138;border-color:rgba(53,201,138,.55);background:linear-gradient(180deg,rgba(53,201,138,.24),rgba(53,201,138,.06) 66%),#11161D}
+.cell.state-work::before{background:rgb(53,201,138);box-shadow:0 0 16px rgba(53,201,138,.7)}
+.cell.state-work .cell-no{color:#F2FFF9}
+.cell.state-work .cell-flag{border-color:rgba(53,201,138,.6);color:#6FE3AF}
+.cell.state-work .cell-meta{color:#A6EBCB}
+.rail-btn#workResetBtn{border-color:rgba(53,201,138,.45);color:#6FE3AF}
+.cell.imode{--h:120,132,148}
+.cell.imode .cell-no{color:#B9C3D2}
+.cell.imode .cell-flag{color:#94A1B2}
+.cell.state-incident{border-color:rgba(236,86,64,.62);background:linear-gradient(180deg,rgba(236,86,64,.26),rgba(236,86,64,.07) 68%),#11161D}
+.cell.state-incident::before{background:repeating-linear-gradient(135deg,rgb(236,86,64) 0 6px,rgba(236,86,64,.34) 6px 12px);box-shadow:0 0 16px rgba(236,86,64,.55)}
+.cell.state-incident:hover{border-color:rgba(236,86,64,.85)}
+.cell.state-incident .cell-no{color:#FFEDE8}
+.cell.state-incident .cell-flag{border-color:rgba(236,86,64,.65);color:#FF9B86}
+.cell.state-incident .cell-meta{color:#F5B4A6}
+.cell.state-stale{border-color:rgba(236,72,153,.8);border-width:2px;background:linear-gradient(180deg,rgba(236,72,153,.34),rgba(236,72,153,.1) 68%),#11161D}
+.cell.state-stale::before{background:repeating-linear-gradient(90deg,rgb(236,72,153) 0 4px,transparent 4px 9px);box-shadow:0 0 14px rgba(236,72,153,.5)}
+.cell.state-stale:hover{border-color:rgba(236,72,153,.88)}
+.cell.state-stale .cell-no{color:#FFE9F6}
+.cell.state-stale .cell-flag{border-color:rgba(236,72,153,.6);color:#FF9BD4}
+.cell.state-stale .cell-meta{color:#F5B6DC}
+.cell.state-stale .cell-icon{color:#FF9BD4;font-size:12px;font-weight:700}
+.stale-chip{font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:#FF9BD4;border:1px solid rgba(236,72,153,.6);background:rgba(236,72,153,.12);border-radius:4px;padding:4px 9px;white-space:nowrap}
+.stale-chip.warn{color:#FFA794;border-color:rgba(236,86,64,.6);background:rgba(236,86,64,.12)}
+.sheet-state.alarm{border-color:rgba(236,86,64,.55);color:#FF9B86}
+.inc-banner{border-color:rgba(236,86,64,.5)!important;background:rgba(236,86,64,.08)!important}
+.inc-banner .field-title{color:#FFA794}
+
+/* ---------- modal ---------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(5,7,10,.72);backdrop-filter:blur(7px);
+  display:flex;align-items:center;justify-content:center;padding:22px;z-index:50;
+  animation:fade .18s ease;
+}
+.overlay[hidden]{display:none}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes rise{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:none}}
+.sheet.sheet-narrow{width:min(640px,100%)}
+.steps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--muted);line-height:1.6}
+.steps b{color:var(--text)}
+.code-wrap{border:1px solid var(--line);border-radius:5px;background:#0A0E14;overflow:hidden}
+.code-wrap summary{cursor:pointer;padding:11px 13px;font-size:12.5px;color:var(--muted);list-style:none}
+.code-wrap summary::-webkit-details-marker{display:none}
+.code-wrap summary::before{content:"▸ ";color:var(--dim)}
+.code-wrap[open] summary{border-bottom:1px solid var(--line);color:var(--text)}
+.code-wrap[open] summary::before{content:"▾ "}
+.code-block{margin:0;background:#0A0E14;padding:12px;max-height:260px;overflow:auto;font-family:var(--mono);font-size:11px;line-height:1.55;color:#C6D2E2;white-space:pre;tab-size:2}
+.sheet{
+  width:min(880px,100%);max-height:92vh;background:var(--panel);border:1px solid var(--line-2);
+  border-radius:9px;display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);animation:rise .2s ease;
+}
+.sheet-head{display:flex;align-items:center;gap:14px;padding:16px 18px;border-bottom:1px solid var(--line);background:var(--panel-2)}
+.sheet-room{display:flex;align-items:baseline;gap:10px}
+.sheet-room .no{font-family:var(--mono);font-weight:600;font-size:27px;letter-spacing:.03em}
+.sheet-room .fl{font-size:12.5px;color:var(--muted)}
+.sheet-state{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;padding:4px 9px;border-radius:3px;border:1px solid var(--line-2);color:var(--muted)}
+.sheet-state.done{border-color:rgba(53,201,138,.45);color:var(--ok)}
+.icon-btn{width:30px;height:30px;border-radius:4px;border:1px solid var(--line-2);background:var(--ink);color:var(--muted);cursor:pointer;line-height:1}
+.icon-btn:hover{color:var(--text);border-color:var(--muted)}
+
+.sheet-body{padding:18px;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{border:1px solid var(--line);border-radius:6px;background:var(--ink);padding:13px 14px;display:flex;flex-direction:column;gap:10px}
+.field.wide{grid-column:1/-1}
+.field-head{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.field-title{font-size:13px;font-weight:700;letter-spacing:.03em}
+.req-tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:#FF8570;border:1px solid rgba(255,133,112,.5);border-radius:3px;padding:1px 5px}
+.field-hint{font-size:11.5px;color:var(--dim);line-height:1.6}
+
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.05em;padding:8px 13px;border-radius:4px;
+  border:1px solid var(--line-2);background:#0D1218;color:var(--muted);cursor:pointer;transition:.15s;
+}
+.chip:hover{color:var(--text);border-color:var(--muted)}
+.chip[aria-pressed="true"]{background:rgba(91,156,255,.15);border-color:var(--accent);color:#CFE2FF}
+
+input[type="text"],input[type="date"]{
+  width:100%;background:#0D1218;border:1px solid var(--line-2);border-radius:4px;color:var(--text);
+  padding:10px 11px;font-size:14px;font-family:var(--sans);color-scheme:dark;
+}
+input[type="date"]{font-family:var(--mono);font-size:13px}
+input:focus{outline:2px solid rgba(91,156,255,.55);outline-offset:1px;border-color:var(--accent)}
+input[aria-invalid="true"],select[aria-invalid="true"]{border-color:rgba(226,84,60,.6)}
+select{width:100%;background:#0D1218;border:1px solid var(--line-2);border-radius:4px;color:var(--text);padding:10px 11px;font-size:14px;font-family:var(--sans);color-scheme:dark}
+select:focus{outline:2px solid rgba(91,156,255,.55);outline-offset:1px;border-color:var(--accent)}
+.staff-edit{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.staff-edit input{flex:1;min-width:140px}
+.staff-actions{display:flex;gap:8px;flex-wrap:wrap}
+.sync-status{font-family:var(--mono);font-size:10.5px;line-height:1.6;color:var(--dim);display:flex;align-items:flex-start;gap:7px}
+.sync-status .dot{flex:0 0 auto;width:7px;height:7px;border-radius:50%;background:var(--dim);margin-top:5px}
+.sync-status.ok .dot{background:var(--ok)}
+.sync-status.error .dot{background:var(--warn)}
+.sync-status.syncing .dot{background:#E6A93F}
+
+.photo-drop{
+  border:1px dashed var(--line-2);border-radius:6px;min-height:158px;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:7px;color:var(--muted);
+  cursor:pointer;text-align:center;padding:18px;background:#0D1218;transition:.16s;
+}
+.photo-drop:hover{border-color:var(--accent);color:var(--text)}
+.photo-drop .big{font-size:13.5px;font-weight:700;color:var(--text)}
+.photo-preview{display:flex;flex-direction:column;gap:10px}
+.photo-preview img{width:100%;height:196px;object-fit:cover;border-radius:5px;border:1px solid var(--line-2);display:block}
+.photo-actions{display:flex;gap:8px;flex-wrap:wrap}
+.photo-thumb{cursor:zoom-in}
+.photo-overlay{position:fixed;inset:0;background:rgba(3,5,8,.93);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:70;animation:fade .16s ease}
+.photo-overlay[hidden]{display:none}
+.photo-stage{display:flex;flex-direction:column;gap:10px;max-width:100%;max-height:100%}
+.photo-bar{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.photo-cap{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted)}
+.photo-stage img{max-width:min(1400px,95vw);max-height:84vh;object-fit:contain;border-radius:6px;border:1px solid var(--line-2);background:#05070A;box-shadow:0 30px 90px rgba(0,0,0,.75);display:block;cursor:zoom-out}
+
+.readout{display:flex;align-items:center;justify-content:space-between;gap:12px;grid-column:1/-1;border-top:1px dashed var(--line);padding-top:13px;margin-top:2px}
+.readout .k{font-size:12.5px;color:var(--muted)}
+.readout .v{font-family:var(--mono);font-size:13px;color:var(--text)}
+
+.sheet-foot{display:flex;align-items:center;gap:12px;padding:14px 18px;border-top:1px solid var(--line);background:var(--panel-2)}
+.req-list{font-size:11.5px;color:var(--warn);margin-right:auto;line-height:1.5}
+.req-list.ok{color:var(--ok)}
+.req-list.muted{color:var(--muted)}
+.btn{border-radius:5px;padding:11px 20px;font-size:13.5px;font-weight:700;letter-spacing:.03em;cursor:pointer;border:1px solid transparent;transition:.15s}
+.btn.ghost{background:transparent;border-color:var(--line-2);color:var(--muted)}
+.btn.ghost:hover{color:var(--text);border-color:var(--muted)}
+.btn.primary{background:var(--accent);color:#08111F;box-shadow:0 6px 18px rgba(91,156,255,.24)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.primary:disabled{background:#232B36;color:var(--dim);box-shadow:none;cursor:not-allowed}
+.btn.danger{background:rgba(236,86,64,.16);border-color:rgba(236,86,64,.62);color:#FF9B86}
+.btn.danger:hover{background:rgba(236,86,64,.26);color:#FFD0C4}
+
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,14px);z-index:80;
+  background:var(--panel-2);border:1px solid var(--line-2);border-radius:6px;padding:11px 18px;
+  font-size:13px;box-shadow:0 18px 40px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.24s;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:1080px){
+  .app{grid-template-columns:1fr}
+  .rail{position:static;height:auto;flex-direction:row;align-items:center;gap:18px;padding:16px 18px;border-right:0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .tabs{flex-direction:row;flex:1;gap:6px;align-items:stretch}
+  .tab-group{flex-direction:row;flex:1;gap:5px;min-width:0}
+  .tab{flex:1 1 0;min-width:0;min-height:52px;padding:5px 2px}
+  .tab .tab-name{font-size:11.5px;letter-spacing:0}
+  /* 設定は正方形 */
+  .tab-tail{flex:0 0 auto;flex-direction:row;gap:8px;align-items:center}
+  .settings-tab{flex:0 0 52px;width:52px;min-width:52px;max-width:52px;height:52px;min-height:52px;padding:0;flex-direction:column;gap:0;justify-content:center;border-color:var(--line-2);background:#0D1218}
+  .settings-tab .tab-gear{font-size:20px}
+  .settings-tab .tab-label{display:none}
+  /* 登録数 */
+  .nav-count{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:1px;padding-left:9px;border-left:1px solid var(--line-2);min-width:46px}
+  .nav-count .nc-num{font-size:13px}
+  .coverage{display:none}
+  .coverage{margin:0;border-top:0;padding-top:0;min-width:150px;flex:0 0 auto}
+  .main{padding:22px 16px 60px}
+  .floor{grid-template-columns:20px minmax(0,1fr);gap:7px}
+  .floor-tag{font-size:12px;letter-spacing:.04em;padding:4px 0}
+  .floor-tag em{font-size:9px}
+  .flow-scroll{overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch}
+  /* 9列を1画面に収める（数字＋小さな状態記号のみ） */
+  .cells{min-width:0;grid-template-columns:repeat(9,minmax(0,1fr));gap:4px}
+  .cell{padding:4px 2px 3px;aspect-ratio:1/1;align-items:center;justify-content:center;gap:0}
+  .cell-flag{display:none}
+  .cell-meta{display:none}
+  .cell-icon{display:block}
+  .cell-no{font-size:12.5px;margin:0;line-height:1.1}
+  .head-top{gap:14px}
+  .mini{white-space:normal;text-align:center;font-size:11px;padding:7px 8px;line-height:1.35}
+  .sheet-body{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+
+/* 更新ボタン */
+.mini.refresh{display:inline-flex;align-items:center;gap:6px;font-weight:700}
+.mini.refresh.busy{opacity:.6}
+.mini.refresh[disabled]{opacity:.5;cursor:default}
+@media (max-width:720px){
+  .mini.refresh{padding:8px 10px;font-size:12px}
+  .cell-no{font-size:15px;line-height:1.05}
+  .cell-flag{font-size:9px;padding:1px 4px;letter-spacing:0}
+  .cell-meta{font-size:9.5px}
+}
+
+/* 設定ポップアップ：モバイルでも下部ボタンが離れない／本文がスクロールできるように */
+#syncOverlay .sheet{max-height:92vh;display:flex;flex-direction:column}
+#syncOverlay .sheet-body{flex:1 1 auto;min-height:0;overflow:auto}
+#syncOverlay .sheet-foot{flex-wrap:wrap;align-items:center}
+#syncOverlay .sheet-foot .btn{white-space:nowrap}
+@media (max-width:720px){
+  #syncOverlay .sheet-foot{gap:8px}
+  #syncOverlay .sheet-foot .req-list{flex:1 1 100%;order:-1;margin:0}
+  #syncOverlay .sheet-foot .btn{flex:1 1 calc(50% - 8px);min-width:0;font-size:13px;padding:10px 8px}
+  #syncOverlay .sheet-foot .btn.primary{flex:1 1 100%}
+  #syncOverlay input[type=text]{font-size:12px}
+  #syncOverlay .code-block{max-height:180px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="rail">
+    <div class="brand">
+      <div class="brand-mark">三</div>
+      <div>
+        <div class="brand-name">三条河原町</div>
+        <div class="brand-sub">Room Control</div>
+      </div>
+    </div>
+
+    <nav class="tabs" aria-label="表示モードと設定">
+      <div class="tab-group" role="tablist">
+        <button class="tab" role="tab" data-mode="normal" aria-selected="true">
+          <span class="tab-name">通常</span><span class="tab-name">モード</span>
+        </button>
+        <button class="tab" role="tab" data-mode="work" aria-selected="false">
+          <span class="tab-name">作業</span><span class="tab-name">モード</span>
+        </button>
+        <button class="tab" role="tab" data-mode="incident" aria-selected="false">
+          <span class="tab-name">異常事態</span><span class="tab-name">モード</span>
+        </button>
+      </div>
+      <div class="tab-tail">
+        <button class="tab settings-tab" id="syncBtn" title="同期設定・バックアップ" aria-label="同期設定・バックアップ">
+          <span class="tab-gear" aria-hidden="true">⚙</span>
+          <span class="tab-label">設定</span>
+          <span class="settings-dot" id="settingsDot"></span>
+        </button>
+        <span class="nav-count" id="navCount"></span>
+      </div>
+    </nav>
+
+    <div class="coverage">
+      <div class="coverage-top">
+        <span class="coverage-label" id="covLabel">登録済</span>
+        <span class="coverage-num"><span id="covDone">0</span><small> / <span id="covAll">67</span></small></span>
+      </div>
+      <div class="bar"><span id="covBar"></span></div>
+      <p class="rail-note" id="railNote">未登録の部屋は淡く表示されます。薄い点線の枠は部屋のない列です。写真・清掃記録はこの端末のブラウザ内に保存されます。</p>
+    </div>
+
+  </aside>
+
+  <main class="main">
+    <header class="head">
+      <div class="head-top">
+        <div>
+          <p class="eyebrow">Sanjo Kawaramachi / Room Registry</p>
+          <h1>三条河原町　部屋一覧</h1>
+          <p class="head-sub" id="headSub">部屋を選ぶと編集画面が開きます。登録済みの部屋は階の色で点灯します。</p>
+        </div>
+        <div class="head-tools">
+          <button class="mini refresh" id="refreshBtn" type="button" title="シートから最新の内容を読み込んで表示します（送信はしません）">↻ 更新</button>
+          <span class="stale-chip" id="staleChip" hidden></span>
+          <span class="stamp" id="nowStamp"></span>
+        </div>
+      </div>
+      <div class="legend" id="legend"></div>
+    </header>
+
+    <div class="flow-scroll">
+      <div class="floors" id="floors"></div>
+    </div>
+  </main>
+</div>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetNo">
+    <div class="sheet-head">
+      <div class="sheet-room">
+        <span class="no" id="sheetNo">101</span>
+        <span class="fl" id="sheetFloor">一階</span>
+      </div>
+      <span class="sheet-state" id="sheetState">未登録</span>
+      <button class="icon-btn" id="closeBtn" aria-label="閉じる">✕</button>
+    </div>
+
+    <div class="sheet-body">
+      <div class="field wide inc-banner" id="incidentNotice" hidden>
+        <div class="field-head">
+          <span class="field-title">⚠ 異常事態（使用不可）</span>
+        </div>
+        <p class="field-hint" id="incidentNoticeText"></p>
+      </div>
+      <div class="field wide">
+        <div class="field-head">
+          <span class="field-title">カラオケ機種・選択方式</span>
+          <span class="req-tag">必須</span>
+        </div>
+        <div class="chips" id="modelChips"></div>
+      </div>
+
+      <div class="field wide">
+        <div class="field-head">
+          <span class="field-title">入り口から見た部屋全体の写真</span>
+          <span class="req-tag">必須</span>
+        </div>
+        <div id="photoArea"></div>
+        <input type="file" id="photoInput" accept="image/*" hidden>
+        <p class="field-hint">1枚のみ登録できます。部屋の入り口側から全体が分かる写真を選んでください。</p>
+      </div>
+
+      <div class="field">
+        <div class="field-head">
+          <span class="field-title">モニターの型番</span>
+          <span class="req-tag">必須</span>
+        </div>
+        <input type="text" id="monitorInput" placeholder="例）SHARP LC-32E9" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <div class="field-head">
+          <span class="field-title">エアコンの型番</span>
+          <span class="req-tag">必須</span>
+        </div>
+        <input type="text" id="acInput" placeholder="例）DAIKIN S28ATES　無い場合は「なし」" autocomplete="off">
+      </div>
+
+      <div class="field wide">
+        <div class="field-head">
+          <span class="field-title">部屋にカメラがあるか</span>
+          <span class="req-tag">必須</span>
+        </div>
+        <div class="chips" id="cameraChips"></div>
+      </div>
+
+      <div class="field">
+        <div class="field-head">
+          <span class="field-title">清掃実施日<span class="fmt">YYYY/MM/DD</span></span>
+          <span class="req-tag">必須</span>
+        </div>
+        <input type="date" id="dateInput">
+      </div>
+
+      <div class="field">
+        <div class="field-head">
+          <span class="field-title">清掃実施者（作業担当者）</span>
+          <span class="req-tag">必須</span>
+        </div>
+        <select id="cleanerSelect"></select>
+        <div class="staff-edit" id="staffEditRow" hidden>
+          <input type="text" id="staffNewInput" placeholder="新しい担当者名を入力" autocomplete="off">
+          <button type="button" class="chip" id="staffAddBtn">登録</button>
+          <button type="button" class="chip" id="staffCancelBtn">やめる</button>
+        </div>
+        <div class="staff-actions">
+          <button type="button" class="chip" id="staffDeleteBtn">選択中の名前をリストから削除</button>
+        </div>
+      </div>
+
+      <div class="field wide">
+        <div class="field-head"><span class="field-title">登録状況</span></div>
+        <p class="field-hint" id="stateHint">7項目すべてを入力すると登録できます。</p>
+      </div>
+
+      <div class="readout">
+        <span class="k">最終更新日時（自動反映）</span>
+        <span class="v" id="stampVal">— 登録時に記録</span>
+      </div>
+    </div>
+
+    <div class="sheet-foot">
+      <span class="req-list" id="reqList"></span>
+      <button class="btn ghost" id="cancelBtn">キャンセル</button>
+      <button class="btn primary" id="saveBtn" disabled>登録する</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="syncOverlay" hidden>
+  <div class="sheet sheet-narrow" role="dialog" aria-modal="true">
+    <div class="sheet-head">
+      <div class="sheet-room"><span class="no" style="font-size:19px">スプレッドシート同期の設定</span></div>
+      <button class="icon-btn" id="syncCloseBtn" aria-label="閉じる">✕</button>
+    </div>
+    <div class="sheet-body" style="grid-template-columns:1fr">
+      <div class="field wide">
+        <div class="field-head"><span class="field-title">この端末の操作</span></div>
+        <div class="settings-actions">
+          <button class="mini" id="refreshBtn2">シートから最新を読み込む（更新）</button>
+          <button class="mini" id="initTableBtn">部屋一覧の行を用意・重複を整理する</button>
+          <button class="mini" id="cleanupBtn">古いシートを削除する</button>
+          <button class="mini" id="syncNowBtn">今すぐ同期（送信＋読込）</button>
+          <button class="mini" id="exportBtn">バックアップを書き出す</button>
+          <button class="mini" id="importBtn">バックアップを読み込む</button>
+          <button class="mini" id="workResetBtn" hidden>作業完了をリセット</button>
+          <button class="mini" id="shrinkBtn">写真を縮小して容量を空ける</button>
+          <button class="mini" id="authorityBtn">サーバーの内容を正として取り込む</button>
+          <input type="file" id="importInput" accept="application/json,.json" hidden>
+        </div>
+        <p class="sync-status" id="syncStatus"><span class="dot"></span><span id="syncStatusText">端末保存のみ（同期オフ）</span></p>
+        <p class="field-hint" id="storageInfo"></p>
+        <p class="field-hint" id="conflictInfo"></p>
+        <p class="field-hint">台帳は <b>room_info</b> の1枚だけを使います。担当者の候補は清掃実施者（H列）から自動で集め、競合の記録はこの端末内にのみ残します（どちらも別シートを作りません）。</p>
+      </div>
+      <div class="field wide">
+        <div class="field-head"><span class="field-title">この端末の名前</span></div>
+        <input type="text" id="deviceLabel" placeholder="例）フロントPC／店長スマホ" autocomplete="off" maxlength="24">
+        <p class="field-hint">更新した内容には、最後に更新した端末としてこの名前が記録されます。空欄なら端末IDのみになります。</p>
+      </div>
+      <div class="field wide">
+        <div class="field-head"><span class="field-title">WebアプリのURL</span></div>
+        <input type="text" id="syncUrlInput" placeholder="https://script.google.com/macros/s/xxxxx/exec" autocomplete="off" spellcheck="false">
+        <p class="field-hint">Googleスプレッドシートを台帳の共有先にします。シートには <b>room_info</b>（部屋番号が縦・項目が横の表）が作られ、表示は常にこの表の内容になります。下の手順でURLを取得して貼り付けてください。</p>
+      </div>
+      <div class="field wide">
+        <div class="field-head"><span class="field-title">接続状態</span></div>
+        <p class="field-hint" id="syncDialogStatus">未設定（この端末のみで動作）</p>
+      </div>
+      <div class="field wide">
+        <div class="field-head"><span class="field-title">設定手順（初回のみ）</span></div>
+        <ol class="steps">
+          <li>Googleドライブで<b>スプレッドシートを新規作成</b>（名前は任意）</li>
+          <li>メニューの<b>拡張機能 → Apps Script</b> を開く</li>
+          <li>下のコードを貼り付けて<b>保存</b>（既存の内容は消してOK）</li>
+          <li><b>デプロイ → 新しいデプロイ → 種類の選択で「ウェブアプリ」</b></li>
+          <li><b>実行ユーザー＝自分／アクセスできるユーザー＝全員</b> にして「デプロイ」</li>
+          <li>表示された<b>ウェブアプリのURL</b>を上欄に貼り付け →「接続テスト」→「保存して同期」</li>
+        </ol>
+        <p class="field-hint"><b>基準（正）はスプレッドシートの room_info です。</b>送るのは変更した列だけ（機種／モニター／エアコン／カメラ／清掃日／清掃者／作業完了／異常）で、他の列と写真はそのまま残ります。送る前に「自分が前回知っていた値」と突き合わせ、サーバー側が先に変わっていれば書かずに競合として記録します（内容が黙って消えることはありません）。</p>
+        <p class="field-hint">2台目以降の端末も、同じURLを貼るだけで同じ台帳を共有できます。すでに設定済みの場合は、下のコードで<b>「デプロイを管理 → 編集 → 新しいバージョン」</b>として再デプロイしてください（同時登録の取りこぼし防止・写真を同期から外して軽量化、が入っています）。<br>写真は<b>同期時に転送せず</b>、部屋を開いたときだけ取得します。台帳の内容（機種・型番・日付など）は数十KBなので、写真が重くても同期は止まりません。</p>
+      </div>
+      <div class="field wide">
+        <div class="field-head">
+          <span class="field-title">Apps Script のコード</span>
+        </div>
+        <div class="staff-actions">
+          <button type="button" class="chip" id="sheetCodeBtn">コードをコピー</button>
+        </div>
+        <details class="code-wrap">
+          <summary>コードを表示（コピーしてApps Scriptに貼り付け）</summary>
+          <pre class="code-block" id="sheetCode">/* ============================================================
+   三条河原町 部屋台帳 — 共有サーバー（Google Apps Script）
+   v8：シートは room_info の1枚だけを使います。
+       ・room_state（旧・key-value形式）は使いません
+       ・conflicts / room_conflicts（競合記録）はシートに作りません
+       ・staff（担当者リスト）はシートに作りません
+   ============================================================ */
+const SHEET_NAME = 'room_info';
+const CODE_VERSION = 9;
+
+/* room_info の列（1始まり）。ここが「正」の情報。 */
+const COLS = {
+  room: 1, floor: 2, model: 3, monitor: 4, ac: 5, camera: 6,
+  cleanedOn: 7, cleaner: 8, work: 9, incident: 10,
+  updatedAt: 11, author: 12, photo: 13, seq: 14
+};
+const HEADERS = ['部屋番号', '階', '機種', 'モニター型番', 'エアコン型番', 'カメラ',
+  '清掃実施日', '清掃実施者', '作業完了', '異常', '更新日時', '更新端末', '写真', '版'];
+/* 競合判定は写真を除く（写真は大きすぎて突き合わせが脆く、行ごと拒否されてしまうため） */
+const INFO_KEYS = ['model', 'monitor', 'ac', 'camera', 'cleanedOn', 'cleaner', 'work', 'incident'];
+const BIG_PHOTO = 45000;
+/* もう使わないシート（設定の「古いシートを削除する」で消せます） */
+const LEGACY_SHEETS = ['room_state', 'conflicts', 'room_conflicts', 'staff'];
+
+/* 読み取り（GET）。?cb= があれば JSONP。 */
+function doGet(e) {
+  const p = (e &amp;&amp; e.parameter) || {};
+  const cb = p.cb || '';
+  let payload;
+  try {
+    if (p.action === 'ping') {
+      payload = { ok: true, pong: true, version: CODE_VERSION, serverTime: new Date().toISOString(), rows: [] };
+    } else if (p.action === 'init') {
+      payload = initTable_(p.rooms || '');
+    } else if (p.action === 'repair') {
+      payload = repairTable_();
+    } else if (p.action === 'cleanup') {
+      payload = cleanupSheets_();
+    } else if (p.action === 'upsert') {
+      payload = applyRows_(p.rows || '', p.author || '');
+    } else {
+      payload = list_(p);
+    }
+  } catch (err) {
+    payload = { ok: false, error: String(err) };
+  }
+  const body = cb ? (cb + '(' + JSON.stringify(payload) + ')') : JSON.stringify(payload);
+  return ContentService.createTextOutput(body)
+    .setMimeType(cb ? ContentService.MimeType.JAVASCRIPT : ContentService.MimeType.JSON);
+}
+
+/* POST（互換用）。通常は GET（302転送で本文が失われる環境があるため） */
+function doPost(e) {
+  let result;
+  try {
+    const body = JSON.parse((e &amp;&amp; e.postData &amp;&amp; e.postData.contents) || '{}');
+    result = (body.action === 'upsert') ? applyRows_(body.rows || [], body.author || '') : list_({});
+  } catch (err) {
+    result = { ok: false, error: String(err) };
+  }
+  return ContentService.createTextOutput(JSON.stringify(result))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+/* ============================================================
+   部屋一覧を用意する（何度呼んでも重複しない）
+   - 足りない部屋だけを1回の書き込みでまとめて追加
+   - 既に重複している行は1行に統合（版が大きい行＝新しい行を残す）
+   - 完全に空の行は削除
+   ============================================================ */
+function initTable_(roomsRaw) {
+  const sh = sheet_();
+  const lock = LockService.getScriptLock();
+  let created = 0, total = 0, fixed = { merged: 0, deletedEmpty: 0 };
+  try {
+    lock.waitLock(20000);
+    fixed = prune_(sh);                       /* まず既存の重複・空行を整理 */
+    const last = sh.getLastRow();
+    const seen = {};
+    if (last &gt; 1) {
+      const vals = sh.getRange(2, COLS.room, last - 1, 1).getValues();
+      vals.forEach(function (r) { const k = String(r[0] || '').trim(); if (k) seen[k] = true; });
+    }
+    const rows = [];
+    String(roomsRaw || '').split(',').forEach(function (pair) {
+      pair = String(pair).trim();
+      if (!pair) return;
+      const parts = pair.split(':');
+      const room = String(parts[0] || '').trim();
+      const floor = String(parts[1] || '').trim();
+      if (!room || seen[room]) return;
+      const row = new Array(HEADERS.length).fill('');
+      row[COLS.room - 1] = room;
+      row[COLS.floor - 1] = floor;
+      rows.push(row);
+      seen[room] = true;
+      created++;
+    });
+    if (rows.length) {                        /* まとめて1回で書き込む（途中で重なる隙を作らない） */
+      sh.getRange(sh.getLastRow() + 1, 1, rows.length, HEADERS.length).setValues(rows);
+    }
+    const again = prune_(sh);                 /* 同時実行で増えていた場合もここで統合 */
+    fixed.merged += again.merged;
+    fixed.deletedEmpty += again.deletedEmpty;
+    total = sh.getLastRow() - 1;
+  } catch (err) {
+    return { ok: false, error: String(err) };
+  } finally {
+    try { lock.releaseLock(); } catch (err) {}
+  }
+  return {
+    ok: true, version: CODE_VERSION, created: created, total: total,
+    merged: fixed.merged, deletedEmpty: fixed.deletedEmpty,
+    serverTime: new Date().toISOString(), rows: []
+  };
+}
+
+/* 重複と空行の整理だけを行う */
+function repairTable_() {
+  const sh = sheet_();
+  const lock = LockService.getScriptLock();
+  let fixed = { merged: 0, deletedEmpty: 0 }, total = 0;
+  try {
+    lock.waitLock(20000);
+    fixed = prune_(sh);
+    total = sh.getLastRow() - 1;
+  } catch (err) {
+    return { ok: false, error: String(err) };
+  } finally {
+    try { lock.releaseLock(); } catch (err) {}
+  }
+  return {
+    ok: true, version: CODE_VERSION, merged: fixed.merged, deletedEmpty: fixed.deletedEmpty,
+    total: total, serverTime: new Date().toISOString(), rows: []
+  };
+}
+
+/* 旧シート（room_state / conflicts / room_conflicts / staff）を削除する。room_info は消しません。 */
+function cleanupSheets_() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const deleted = [], kept = [];
+  try {
+    LEGACY_SHEETS.forEach(function (name) {
+      const sh = ss.getSheetByName(name);
+      if (!sh) return;
+      if (ss.getSheets().length &lt;= 1) return;      /* 最後の1枚は残す */
+      ss.deleteSheet(sh);
+      deleted.push(name);
+    });
+    ss.getSheets().forEach(function (s) { kept.push(s.getName()); });
+  } catch (err) {
+    return { ok: false, error: String(err) };
+  }
+  return {
+    ok: true, version: CODE_VERSION, deleted: deleted, sheets: kept,
+    serverTime: new Date().toISOString(), rows: []
+  };
+}
+
+/* 行の「濃さ」。版が大きい行を優先し、同じなら記入が多い行を残す */
+function score_(r) {
+  let filled = 0;
+  for (let i = 0; i &lt; r.length; i++) { if (String(r[i] === null || r[i] === undefined ? '' : r[i]).trim() !== '') filled++; }
+  return Number(r[COLS.seq - 1] || 0) * 1000 + filled;
+}
+
+/* 同じ部屋番号の行を1本にまとめ、空行を消す */
+function prune_(sh) {
+  const last = sh.getLastRow();
+  if (last &lt; 2) return { merged: 0, deletedEmpty: 0 };
+  const values = sh.getRange(2, 1, last - 1, HEADERS.length).getValues();
+  const best = {};
+  const drop = {};
+  let merged = 0, deletedEmpty = 0;
+  for (let i = 0; i &lt; values.length; i++) {
+    const room = String(values[i][COLS.room - 1] || '').trim();
+    if (!room) { drop[i] = true; deletedEmpty++; continue; }      /* 部屋番号が空＝消す */
+    if (!(room in best)) { best[room] = i; continue; }
+    if (score_(values[i]) &gt; score_(values[best[room]])) { drop[best[room]] = true; best[room] = i; }
+    else drop[i] = true;
+    merged++;
+  }
+  const idx = Object.keys(drop).map(Number).sort(function (a, b) { return b - a; });
+  let run = 0, runStart = -1;
+  idx.forEach(function (i) {
+    if (run &gt; 0 &amp;&amp; i === runStart - 1) { run++; runStart = i; return; }
+    if (run &gt; 0) sh.deleteRows(runStart + 2, run);
+    run = 1; runStart = i;
+  });
+  if (run &gt; 0) sh.deleteRows(runStart + 2, run);
+  return { merged: merged, deletedEmpty: deletedEmpty };
+}
+
+/* 一覧を返す。light=1 で写真を外す（同期用）。keys= で部屋を絞る（写真つき） */
+function list_(p) {
+  const sh = sheet_();
+  const last = sh.getLastRow();
+  const want = p.keys ? String(p.keys).split(',').map(function (k) { return String(k).replace(/^room:/, '').trim(); }) : null;
+  const light = String(p.light || '') === '1';
+  const out = [];
+  if (last &gt; 1) {
+    const values = sh.getRange(2, 1, last - 1, HEADERS.length).getValues();
+    values.forEach(function (r) {
+      const room = String(r[COLS.room - 1] || '').trim();
+      if (!room) return;
+      if (want &amp;&amp; want.indexOf(room) &lt; 0) return;
+      out.push(rowToObj(r, room, light));
+    });
+  }
+  /* 万一重複が残っていても、同じ部屋は1件だけ返す（版が大きい行を優先） */
+  const best = {}, picked = [];
+  out.forEach(function (o) {
+    if (!(o.room in best)) { best[o.room] = picked.length; picked.push(o); return; }
+    if (Number(o.seq || 0) &gt; Number(picked[best[o.room]].seq || 0)) picked[best[o.room]] = o;
+  });
+  return { ok: true, version: CODE_VERSION, serverTime: new Date().toISOString(), count: picked.length, rows: picked };
+}
+
+function rowToObj(r, room, light) {
+  function s(i) { const v = r[i - 1]; return (v === null || v === undefined) ? '' : String(v); }
+  const photo = s(COLS.photo);
+  const fields = {
+    model: s(COLS.model), monitor: s(COLS.monitor), ac: s(COLS.ac), camera: s(COLS.camera),
+    cleanedOn: s(COLS.cleanedOn), cleaner: s(COLS.cleaner),
+    work: s(COLS.work), incident: s(COLS.incident),
+    hasPhoto: !!photo
+  };
+  if (!light &amp;&amp; photo) fields.photo = photo;
+  return {
+    room: room, floor: s(COLS.floor), fields: fields,
+    updated_at: s(COLS.updatedAt), author: s(COLS.author),
+    seq: Number(s(COLS.seq) || 0), light: light
+  };
+}
+
+/* ============================================================
+   書き込み。前の値(prev)と食い違っていれば書かずに競合として返す（上書きしない）。
+   競合はこの応答の中だけで返し、シートには記録しません（端末側で表示・保存）。
+   ============================================================ */
+function applyRows_(rowsRaw, author) {
+  let rows = rowsRaw;
+  if (typeof rows === 'string') {
+    try { rows = rows ? JSON.parse(rows) : []; } catch (err) { throw new Error('rows を解釈できません'); }
+  }
+  if (!Array.isArray(rows)) throw new Error('rows が配列ではありません');
+  const lock = LockService.getScriptLock();
+  let result = { ok: true, applied: [], conflicts: [], count: 0, ignored: 0, photoSkipped: 0 };
+  try {
+    lock.waitLock(20000);
+    const applied = [], conflicts = [];
+    /* room_state 時代の key（staff:list など）が来ても、シートは作らず読み飛ばす */
+    const roomRows = [];
+    rows.forEach(function (r) {
+      if (!r || !r.key) return;
+      if (!/^(room|work|incident):/.test(String(r.key))) { result.ignored++; return; }
+      roomRows.push(r);
+    });
+
+    if (roomRows.length) {
+      const sh = sheet_();
+      prune_(sh);                                   /* 重複行があっても必ず1本にまとめてから書く */
+      const last = sh.getLastRow();
+      const values = last &gt; 1 ? sh.getRange(2, 1, last - 1, HEADERS.length).getValues() : [];
+      const at = {};
+      let maxSeq = 0;
+      for (let i = 0; i &lt; values.length; i++) {
+        const room = String(values[i][COLS.room - 1] || '').trim();
+        if (!room) continue;
+        if (!at[room]) at[room] = { row: i + 2, vals: values[i] };
+        const sq = Number(values[i][COLS.seq - 1] || 0);
+        if (sq &gt; maxSeq) maxSeq = sq;
+      }
+      const now = new Date();
+      const nowStr = Utilities.formatDate(now, Session.getScriptTimeZone() || 'Asia/Tokyo', 'yyyy/MM/dd HH:mm:ss');
+
+      roomRows.forEach(function (r) {
+        const m = /^(room|work|incident):(.+)$/.exec(String(r.key));
+        if (!m) return;
+        const kind = m[1], room = String(m[2]).trim();
+        const fields = r.fields || {};
+        const prev = r.prev || {};
+        const cur = at[room] ? rowToObj(at[room].vals, room, false) : null;
+
+        /* 競合判定：送ろうとした列が、前回知っていた値と違っていれば他の端末が先に更新している */
+        if (cur) {
+          for (let k = 0; k &lt; INFO_KEYS.length; k++) {
+            const name = INFO_KEYS[k];
+            if (!(name in fields)) continue;
+            if (!(name in prev)) continue;
+            const mine = norm_(prev[name]);
+            const theirs = name === 'photo' ? norm_(cur.fields.photo) : norm_(cur.fields[name]);
+            if (mine !== theirs) {
+              conflicts.push({
+                key: r.key, serverSeq: cur.seq,
+                server: lightFields_(cur.fields), client: fields
+              });
+              return;
+            }
+          }
+        } else if (Object.keys(prev).length) {
+          conflicts.push({ key: r.key, serverSeq: 0, server: {}, client: fields });
+          return;
+        }
+
+        /* 反映：送られた列だけを書き換える（他の列と写真はそのまま残る） */
+        const row = at[room] ? at[room].vals.slice() : new Array(HEADERS.length).fill('');
+        row[COLS.room - 1] = room;
+        if (kind === 'room') {
+          ['model', 'monitor', 'ac', 'camera', 'cleanedOn', 'cleaner'].forEach(function (name) {
+            if (name in fields) row[COLS[name] - 1] = fields[name];
+          });
+          if ('photo' in fields) {
+            const ph = String(fields.photo || '');
+            if (ph.length &gt; BIG_PHOTO) {
+              result.photoSkipped = (result.photoSkipped || 0) + 1;   /* 大きすぎる写真は保存せず、いまの写真を残す */
+            } else {
+              row[COLS.photo - 1] = ph;
+            }
+          }
+        } else if (kind === 'work') {
+          row[COLS.work - 1] = ('work' in fields) ? fields.work : '';
+        } else {
+          row[COLS.incident - 1] = ('incident' in fields) ? fields.incident : '';
+        }
+        if (fields.floor) row[COLS.floor - 1] = fields.floor;
+        row[COLS.updatedAt - 1] = nowStr;
+        row[COLS.author - 1] = String(author || '');
+        maxSeq += 1;
+        row[COLS.seq - 1] = maxSeq;
+        const target = at[room] ? at[room].row : (sh.getLastRow() + 1);
+        sh.getRange(target, 1, 1, HEADERS.length).setValues([row]);
+        at[room] = { row: target, vals: row };
+        applied.push({ key: r.key, seq: maxSeq });
+      });
+    }
+
+    result.applied = applied;
+    result.conflicts = conflicts;
+    result.count = applied.length;
+  } catch (err) {
+    result = { ok: false, error: String(err) };
+  } finally {
+    try { lock.releaseLock(); } catch (err) {}
+  }
+  return result;
+}
+
+function lightFields_(f) {
+  const out = {};
+  Object.keys(f).forEach(function (k) { if (k !== 'photo') out[k] = f[k]; });
+  out.hasPhoto = !!f.photo;
+  return out;
+}
+function norm_(v) { return (v === null || v === undefined) ? '' : String(v).trim(); }
+
+function sheet_() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sh = ss.getSheetByName(SHEET_NAME);
+  if (!sh) sh = ss.insertSheet(SHEET_NAME);
+  const last = sh.getLastRow();
+  const head = last &gt; 0 ? sh.getRange(1, 1, 1, HEADERS.length).getValues()[0] : [];
+  const okHead = String(head[0] || '') === HEADERS[0] &amp;&amp; String(head[COLS.seq - 1] || '') === HEADERS[COLS.seq - 1];
+  if (!okHead) {
+    sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+    sh.setFrozenRows(1);
+  }
+  return sh;
+}</pre>
+        </details>
+        <p class="field-hint">コードは枠内をスクロールして全体を確認できます。</p>
+      </div>
+    </div>
+    <div class="sheet-foot">
+      <span class="req-list" id="syncTestResult"></span>
+      <button class="btn ghost" id="syncTestBtn">接続テスト</button>
+      <button class="btn ghost" id="syncOffBtn">この端末のみに戻す</button>
+      <button class="btn primary" id="syncSaveBtn">保存して同期</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="incidentOverlay" hidden>
+  <div class="sheet sheet-narrow" role="dialog" aria-modal="true">
+    <div class="sheet-head">
+      <div class="sheet-room">
+        <span class="no" id="incRoom">101</span>
+        <span class="fl" id="incFloor">一階</span>
+      </div>
+      <span class="sheet-state" id="incState">正常</span>
+      <button class="icon-btn" id="incCloseBtn" aria-label="閉じる">✕</button>
+    </div>
+    <div class="sheet-body" style="grid-template-columns:1fr">
+      <div class="field wide">
+        <div class="field-head">
+          <span class="field-title">異常の内容（一言）</span>
+          <span class="req-tag">必須</span>
+        </div>
+        <input type="text" id="incTextInput" maxlength="80" placeholder="例）モニター破損／エアコン故障／水漏れ" autocomplete="off">
+        <p class="field-hint">登録すると、この部屋は<strong>使用不可</strong>として扱われ、通常モード・作業モードでも赤く表示されます。すでに発生中の部屋では、下の<strong>「異常事態を解除する」</strong>で正常に戻せます（解除も全モード・全端末に反映）。</p>
+      </div>
+      <div class="readout">
+        <span class="k">登録日時（自動反映）</span>
+        <span class="v" id="incStamp">— 登録時に記録</span>
+      </div>
+    </div>
+    <div class="sheet-foot">
+      <span class="req-list" id="incReq"></span>
+      <button class="btn danger" id="incClearBtn" hidden>異常事態を解除する（使用可に戻す）</button>
+      <button class="btn ghost" id="incCancelBtn">キャンセル</button>
+      <button class="btn primary" id="incSaveBtn" disabled>登録する</button>
+    </div>
+  </div>
+</div>
+
+<div class="photo-overlay" id="photoOverlay" hidden>
+  <div class="photo-stage">
+    <div class="photo-bar">
+      <span class="photo-cap" id="photoCaption"></span>
+      <button class="icon-btn" id="photoCloseBtn" aria-label="閉じる">✕</button>
+    </div>
+    <img id="photoLarge" alt="部屋の写真（拡大表示）">
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var BUILD_VERSION = "__BUILD_VERSION__";
+  var MODELS = ["LAI","AIR","LDW","JM","JM2","JMG","JX1"];
+  var CAMERAS = ["有","無"];
+  function seq(a,b){var r=[],i;for(i=a;i<=b;i++)r.push(String(i));return r;}
+
+  var FLOORS = [
+    {f:1,kanji:"一",h:"230,169,63",rows:[seq(101,108)]},
+    {f:2,kanji:"二",h:"63,195,163",rows:[seq(201,209),seq(210,215)]},
+    {f:3,kanji:"三",h:"139,123,232",rows:[seq(301,309),seq(310,313)]},
+    {f:4,kanji:"四",h:"228,121,143",rows:[seq(401,409),seq(410,416)]},
+    {f:5,kanji:"五",h:"79,163,227",rows:[seq(501,509),seq(510,515)]}
+  ];
+  var ALL_ROOMS = [];
+  FLOORS.forEach(function(fl){ fl.rows.forEach(function(r){ ALL_ROOMS = ALL_ROOMS.concat(r); }); });
+  var ROOM_META = {};
+  FLOORS.forEach(function(fl){ fl.rows.forEach(function(r){ r.forEach(function(n){ ROOM_META[n]={floor:fl.f,kanji:fl.kanji,h:fl.h}; }); }); });
+
+  var KEY = "sk3-room-registry-v1";
+  var data = {};
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw) data = JSON.parse(raw) || {};
+  }catch(e){}
+
+  var storageFull = false;
+  var photosDropped = 0;   /* 容量確保のため端末から外した写真の数 */
+  function storageBytes(){
+    var s = JSON.stringify(data);
+    try{ return new Blob([s]).size; }catch(e){ return s.length; }
+  }
+  /* 容量が足りないときは、古い写真から端末から外して「台帳の情報」だけは必ず保存する。
+     写真はサーバー（スプレッドシート）側に残り、必要になった時点で取り直せる。 */
+  function persist(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); storageFull = false; return true; }
+    catch(e){
+      storageFull = true;
+      var withPhoto = Object.keys(data).filter(function(no){ return data[no] && data[no].photo; })
+        .sort(function(a,b){ return String(data[a].updatedAt||"") < String(data[b].updatedAt||"") ? -1 : 1; });
+      for(var i = 0; i < withPhoto.length; i++){
+        var no = withPhoto[i];
+        data[no].photo = null; data[no].photoOff = true; photosDropped++;
+        try{ localStorage.setItem(KEY, JSON.stringify(data)); storageFull = true; return true; }catch(e2){}
+      }
+      storageFull = true; return false;
+    }
+  }
+
+  function pad(n){ return n<10 ? "0"+n : ""+n; }
+  function todayValue(){ var d=new Date(); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+  function stampNow(){
+    var d=new Date();
+    return d.getFullYear()+"/"+pad(d.getMonth()+1)+"/"+pad(d.getDate())+" "+pad(d.getHours())+":"+pad(d.getMinutes());
+  }
+  function shortSlash(iso){
+    if(!iso) return "—";
+    var p = String(iso).split("-");
+    return p.length===3 ? (parseInt(p[1],10)+"/"+parseInt(p[2],10)) : iso;
+  }
+  function ymdOf(v){
+    if(v === null || v === undefined) return null;
+    var t = String(v).trim();
+    if(!t) return null;
+    var m = t.match(/^(\d{4})[-\/.年](\d{1,2})[-\/.月](\d{1,2})/);
+    if(m){
+      var y = +m[1], mo = +m[2], da = +m[3];
+      if(y > 1970 && mo >= 1 && mo <= 12 && da >= 1 && da <= 31) return { y:y, m:mo, d:da };
+    }
+    var d = new Date(t);
+    if(!isNaN(d.getTime())) return { y:d.getFullYear(), m:d.getMonth()+1, d:d.getDate() };
+    return null;
+  }
+  function isoFrom(v){
+    var p = ymdOf(v);
+    return p ? (p.y + "-" + pad(p.m) + "-" + pad(p.d)) : "";
+  }
+  function daysSince(v){
+    var p = ymdOf(v);
+    if(!p) return null;
+    var then = new Date(p.y, p.m-1, p.d);
+    var n = new Date();
+    var today = new Date(n.getFullYear(), n.getMonth(), n.getDate());
+    return Math.round((today - then) / 86400000);
+  }
+  var STALE_DAYS = 14;
+  function isStale(rec){
+    if(!rec) return false;
+    var d = daysSince(rec.cleanedOn);
+    return d !== null && d >= STALE_DAYS;
+  }
+  /* 記入が1つでもある部屋だけを「登録済」とみなす（行が用意されただけの部屋は未登録のまま） */
+  function hasInfo(rec){
+    if(!rec) return false;
+    return !!(rec.model || rec.monitor || rec.ac || rec.camera || rec.cleanedOn || rec.cleaner
+              || rec.photo || rec.hasPhoto);
+  }
+  function registeredRooms(){
+    return ALL_ROOMS.filter(function(no){ return hasInfo(data[no]); });
+  }
+  function staleRooms(){
+    return ALL_ROOMS.filter(function(no){ return data[no] && isStale(data[no]); });
+  }
+  function badDateRooms(){
+    return ALL_ROOMS.filter(function(no){
+      var r = data[no];
+      return !!(r && r.cleanedOn && !ymdOf(r.cleanedOn));
+    });
+  }
+  /* 保存済みの清掃日を YYYY-MM-DD に正規化（旧形式や手入力の揺れを吸収し、サーバーにも反映） */
+  function normalizeDates(){
+    var changed = false;
+    Object.keys(data).forEach(function(no){
+      var r = data[no];
+      if(!r || !r.cleanedOn) return;
+      var iso = isoFrom(r.cleanedOn);
+      if(iso && iso !== r.cleanedOn){ r.cleanedOn = iso; r.rev = Date.now(); changed = true; }
+    });
+    if(changed){ persist(); }
+    return changed;
+  }
+
+  function stampDate(s){
+    if(!s) return "—";
+    var p = String(s).split(" ")[0].split("/");
+    return p.length===3 ? (parseInt(p[1],10)+"/"+parseInt(p[2],10)) : String(s);
+  }
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+  var mode = "normal";
+  var current = null;
+  var pendingPhoto = null;
+  var photoLoading = false;   /* サーバーから写真を取得中 */
+
+  var SKEY = KEY + "-staff";
+  var HIDE_KEY = KEY + "-staff-hidden";   /* この端末で候補から外した名前 */
+  var staffHidden = [];
+  try{ var hideRaw = localStorage.getItem(HIDE_KEY); if(hideRaw) staffHidden = JSON.parse(hideRaw) || []; }catch(e){}
+  if(!Array.isArray(staffHidden)) staffHidden = [];
+  function persistStaffHidden(){ try{ localStorage.setItem(HIDE_KEY, JSON.stringify(staffHidden)); }catch(e){} }
+  /* 担当者の候補は room_info の清掃実施者（H列）から集める。この端末で登録した名前も足す。 */
+  function mergeStaffFromRows(rows){
+    var seen = {}, list = [];
+    staffHidden.forEach(function(n){ seen[n] = 1; });
+    staff.forEach(function(x){ if(x && x.name && x.src !== "sheet" && !seen[x.name]){ seen[x.name] = 1; list.push(x); } });
+    (rows || []).forEach(function(r){
+      var n = String(((r && r.fields) || {}).cleaner || "").trim();
+      if(!n || seen[n]) return;
+      seen[n] = 1;
+      list.push({ name:n, rev:0, src:"sheet" });
+    });
+    list.sort(function(a,b){ return String(a.name).localeCompare(String(b.name), "ja"); });
+    var changed = list.length !== staff.length;
+    if(!changed){ for(var i=0;i<list.length;i++){ if(!staff[i] || staff[i].name !== list[i].name || staff[i].src !== list[i].src){ changed = true; break; } } }
+    staff = list;
+    if(changed){ persistStaff(); refreshStaffSelect(); }
+    return changed;
+  }
+  function refreshStaffSelect(){
+    try{
+      if(overlay && !overlay.hidden){
+        var sel = document.getElementById("cleanerSelect");
+        var keep = (sel && sel.value && sel.value !== "__new__") ? sel.value : "";
+        buildStaffSelect(keep, keep ? [keep] : []);
+      }
+    }catch(e){}
+  }
+  var staff = [];
+  try{ var sraw0 = localStorage.getItem(SKEY); if(sraw0) staff = JSON.parse(sraw0) || []; }catch(e){}
+  if(!Array.isArray(staff)) staff = [];
+  function persistStaff(){ try{ localStorage.setItem(SKEY, JSON.stringify(staff)); }catch(e){} }
+  function staffRev(){ var m = 0; staff.forEach(function(x){ if(x.rev > m) m = x.rev; }); return m; }
+  function staffNames(extra){
+    var names = staff.map(function(x){ return x.name; });
+    if(extra && names.indexOf(extra) < 0) names.push(extra);
+    return names;
+  }
+
+  var WKEY = KEY + "-work";
+  var work = {};
+  try{ var wraw = localStorage.getItem(WKEY); if(wraw) work = JSON.parse(wraw) || {}; }catch(e){}
+  function persistWork(){
+    try{ localStorage.setItem(WKEY, JSON.stringify(work)); return true; }catch(e){ storageFull = true; return false; }
+  }
+  function hhmm(){ var d = new Date(); return pad(d.getHours())+":"+pad(d.getMinutes()); }
+
+  var IKEY = KEY + "-incident";
+  var incidents = {};
+  try{ var iraw = localStorage.getItem(IKEY); if(iraw) incidents = JSON.parse(iraw) || {}; }catch(e){}
+  function persistIncidents(){
+    try{ localStorage.setItem(IKEY, JSON.stringify(incidents)); return true; }catch(e){ storageFull = true; return false; }
+  }
+  function incidentCount(){
+    return Object.keys(incidents).filter(function(k){ return incidents[k] && incidents[k].on; }).length;
+  }
+
+  /* ---------- render ---------- */
+  function render(){
+    var host = document.getElementById("floors");
+    var html = "";
+    FLOORS.forEach(function(fl){
+      html += '<section class="floor" style="--h:'+fl.h+'">';
+      html += '<div class="floor-tag">'+fl.kanji+'<em>階</em></div>';
+      html += '<div class="floor-body">';
+      fl.rows.forEach(function(row){
+        html += '<div class="cells">';
+        row.forEach(function(no){
+          var rec = hasInfo(data[no]) ? data[no] : null;
+          var done = !!rec;
+          var wdone = !!(work[no] && work[no].t);
+          var inc = !!(incidents[no] && incidents[no].on);
+          var stale = (mode === "normal" && done && isStale(rec));
+          var cls, meta, flag, styleAttr, title;
+          if(inc){
+            cls = "cell imode state-incident";
+            styleAttr = "";
+            flag = "";
+            var incText = incidents[no].text || "";
+            var incWhen = incidents[no].at || "";
+            if(mode==="incident"){
+              title = no + " の異常事態を編集・解除する（" + incText + "）";
+              meta = "⚠ 発生中";
+            }else if(mode==="work"){
+              title = no + " は異常事態のため使用不可です（" + incText + "）";
+              meta = "⚠ 使用不可";
+            }else{
+              title = no + " の異常事態を確認する（" + incText + "）";
+              meta = "⚠ 異常";
+            }
+          }else if(mode==="work"){
+            cls = "cell wmode " + (wdone ? "state-work" : "state-todo");
+            styleAttr = "";
+            title = no + (wdone ? " の作業完了を取り消す" : " を作業完了にする");
+            meta = wdone
+              ? '完了 '+work[no].t
+              : (done ? '清掃 '+shortSlash(rec.cleanedOn) : "未登録");
+            flag = '<span class="cell-flag">'+(wdone ? "✓ 完了" : "未完了")+'</span>';
+          }else if(mode==="incident"){
+            cls = "cell imode state-todo";
+            styleAttr = "";
+            title = no + " の異常を登録する";
+            meta = "異常なし";
+            flag = '<span class="cell-flag">正常</span>';
+          }else if(stale){
+            cls = "cell state-stale";
+            styleAttr = "";
+            title = no + " は清掃から" + daysSince(rec.cleanedOn) + "日経過しています（清掃実施日 " + rec.cleanedOn + "）";
+            meta = "要清掃 " + daysSince(rec.cleanedOn) + "日経過";
+            flag = '<span class="cell-flag">要清掃</span>';
+          }else{
+            cls = "cell " + (done ? "state-done" : "state-todo");
+            styleAttr = ' style="--h:'+fl.h+'"';
+            title = no + ' の編集画面を開く';
+            meta = done
+              ? '<b>'+esc(rec.model)+'</b> ・ 更新 '+stampDate(rec.updatedAt)
+              : "未登録";
+            flag = done ? '<span class="cell-flag">登録済</span>' : '';
+          }
+          var icon = "";
+          if(inc) icon = "⚠";
+          else if(mode==="work" && wdone) icon = "✓";
+          else if(stale) icon = "!";
+          else if(mode==="normal" && done) icon = "●";
+          html += '<button class="'+cls+'" data-room="'+no+'"'+styleAttr+' title="'+title+'">'
+                + flag
+                + '<span class="cell-no">'+no+'</span>'
+                + '<span class="cell-icon">'+icon+'</span>'
+                + '<span class="cell-meta">'+meta+'</span>'
+                + '</button>';
+        });
+        for(var g = 9 - row.length; g > 0; g--){ html += '<div class="cell ghost" aria-hidden="true"></div>'; }
+        html += '</div>';
+      });
+      html += '</div></section>';
+    });
+    host.innerHTML = html;
+
+    renderCoverage();
+  }
+
+  function renderCoverage(){
+    var n, label;
+    if(mode==="work"){
+      label = "作業完了";
+      n = Object.keys(work).filter(function(k){ return work[k] && work[k].t; }).length;
+    }else if(mode==="incident"){
+      label = "異常事態";
+      n = incidentCount();
+    }else{
+      label = "登録済";
+      n = registeredRooms().length;
+    }
+    document.getElementById("covLabel").textContent = label;
+    document.getElementById("covDone").textContent = n;
+    var nav = document.getElementById("navCount");
+    if(nav) nav.innerHTML = '<span class="nc-label">'+label+'</span><span class="nc-num">'+n+'<small> / '+ALL_ROOMS.length+'</small></span>';
+    document.getElementById("covAll").textContent = ALL_ROOMS.length;
+    document.getElementById("covBar").style.width = (ALL_ROOMS.length? (n/ALL_ROOMS.length*100):0) + "%";
+  }
+
+  function renderLegend(){
+    var host = document.getElementById("legend");
+    if(!host) return;
+    var out = [];
+    function add(h, label){ out.push('<span style="--lh:'+h+'"><i></i>'+label+'</span>'); }
+    if(mode === "normal"){
+      FLOORS.forEach(function(fl){
+        var first = fl.rows[0][0];
+        var lastRow = fl.rows[fl.rows.length - 1];
+        var last = lastRow[lastRow.length - 1];
+        add(fl.h, fl.kanji + "階 " + first + "〜" + last);
+      });
+      add("236,86,64", "異常事態（使用不可）");
+      add("236,72,153", "清掃から2週間経過 " + staleRooms().length + "件");
+    }else if(mode === "work"){
+      add("236,86,64", "異常事態（使用不可）");
+      add("53,201,138", "作業完了");
+      add("120,132,148", "未完了");
+    }else{
+      add("236,86,64", "異常事態（発生中）");
+      add("120,132,148", "正常");
+    }
+    host.innerHTML = out.join("");
+  }
+
+  function renderStaleInfo(){
+    var chip = document.getElementById("staleChip");
+    if(!chip) return;
+    if(mode !== "normal"){ chip.hidden = true; return; }
+    var n = staleRooms().length;
+    var bad = badDateRooms().length;
+    var t = "要清掃 " + n + "件（清掃から" + STALE_DAYS + "日以上）";
+    if(bad) t += "／清掃日の形式が読めない部屋 " + bad + "件";
+    chip.textContent = t;
+    chip.hidden = false;
+    chip.classList.toggle("warn", bad > 0);
+  }
+
+  function renderHead(){
+    var isWork = mode==="work";
+    var isInc = mode==="incident";
+    document.getElementById("workResetBtn").hidden = !isWork;
+    if(isWork){
+      document.getElementById("railNote").textContent = "作業モードでは編集できません。部屋を押すと作業完了の印が付き、もう一度押すと元に戻ります。赤い部屋は異常事態のため使用不可です。";
+    }else if(isInc){
+      document.getElementById("railNote").textContent = "異常事態モード：部屋を押すと異常の内容を一言で登録できます。登録した部屋は使用不可となり、どのモードでも赤く表示されます。";
+    }else{
+      document.getElementById("railNote").textContent = "未登録の部屋は淡く表示されます。薄い点線の枠は部屋のない列です。写真・清掃記録はこの端末のブラウザ内に保存されます。";
+    }
+    document.getElementById("headSub").textContent = isWork
+      ? "作業モード：編集はできません。部屋を押すと作業完了として緑に点灯します。もう一度押すと取り消せます。赤い部屋は使用不可です。"
+      : (isInc
+        ? "異常事態モード：部屋を押すと一言を入力して登録します。登録された部屋は使用不可となり、通常モード・作業モードでも赤く表示されます。"
+        : "通常モード：部屋の登録内容を確認します。部屋を選ぶと編集画面が開きます。清掃から2週間を過ぎた部屋はピンクで表示されます。");
+    renderLegend();
+    renderStaleInfo();
+    var d = new Date();
+    document.getElementById("nowStamp").textContent = "最終表示 " + d.getFullYear()+"/"+pad(d.getMonth()+1)+"/"+pad(d.getDate())+" "+pad(d.getHours())+":"+pad(d.getMinutes());
+  }
+
+  /* ---------- modal ---------- */
+  var overlay = document.getElementById("overlay");
+  var photoArea = document.getElementById("photoArea");
+  var photoInput = document.getElementById("photoInput");
+
+  function bindChips(box){
+    box.querySelectorAll(".chip").forEach(function(c){
+      c.addEventListener("click", function(){
+        var on = c.getAttribute("aria-pressed") === "true";
+        box.querySelectorAll(".chip").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+        c.setAttribute("aria-pressed", on ? "false" : "true");
+        validate();
+      });
+    });
+  }
+  function buildModelChips(){
+    var box = document.getElementById("modelChips");
+    box.innerHTML = MODELS.map(function(m){
+      return '<button type="button" class="chip" data-model="'+m+'" aria-pressed="false">'+m+'</button>';
+    }).join("");
+    bindChips(box);
+  }
+
+  function buildStaffSelect(selected, extra){
+    var sel = document.getElementById("cleanerSelect");
+    var names = staffNames(extra);
+    var html = '<option value="">（未選択）</option>';
+    names.forEach(function(n){ html += '<option value="'+esc(n)+'">'+esc(n)+'</option>'; });
+    html += '<option value="__new__">＋ 新しい名前を登録…</option>';
+    sel.innerHTML = html;
+    sel.value = (selected && names.indexOf(selected) >= 0) ? selected : "";
+  }
+
+  function buildCameraChips(){
+    var box = document.getElementById("cameraChips");
+    box.innerHTML = CAMERAS.map(function(c){
+      return '<button type="button" class="chip" data-camera="'+c+'" aria-pressed="false">'+c+'</button>';
+    }).join("");
+    bindChips(box);
+  }
+
+  /* ---------- 写真の拡大表示 ---------- */
+  var photoOverlay = document.getElementById("photoOverlay");
+  function openPhoto(src, caption){
+    if(!src){ toast("表示できる写真がありません"); return; }
+    var img = document.getElementById("photoLarge");
+    img.src = src;
+    document.getElementById("photoCaption").textContent = caption || "";
+    photoOverlay.hidden = false;
+  }
+  function closePhoto(){
+    photoOverlay.hidden = true;
+    document.getElementById("photoLarge").src = "";
+  }
+  document.getElementById("photoCloseBtn").addEventListener("click", closePhoto);
+  photoOverlay.addEventListener("mousedown", function(e){
+    if(e.target === photoOverlay || e.target.id === "photoLarge") closePhoto();
+  });
+
+  function photoCaption(){
+    var no = current || "";
+    var d = document.getElementById("dateInput").value;
+    return no + (d ? "　／　清掃実施日 " + d : "");
+  }
+
+  function renderPhoto(){
+    photoArea.innerHTML = "";
+    if(pendingPhoto){
+      photoArea.innerHTML = '<div class="photo-preview">'
+        + '<img class="photo-thumb" src="'+pendingPhoto+'" alt="登録する部屋写真のプレビュー" title="クリックで拡大表示">'
+        + '<div class="photo-actions">'
+        + '<button type="button" class="chip" id="photoZoom">拡大表示</button>'
+        + '<button type="button" class="chip" id="photoChange">差し替え</button>'
+        + '<button type="button" class="chip" id="photoClear">削除</button>'
+        + '</div></div>';
+      document.getElementById("photoZoom").onclick = function(){ openPhoto(pendingPhoto, photoCaption()); };
+      document.querySelector("#photoArea .photo-thumb").onclick = function(){ openPhoto(pendingPhoto, photoCaption()); };
+      document.getElementById("photoChange").onclick = function(){ photoInput.click(); };
+      document.getElementById("photoClear").onclick = function(){ pendingPhoto=null; renderPhoto(); validate(); };
+      return;
+    }
+    if(photoLoading){
+      photoArea.innerHTML = '<div class="photo-drop">'
+        + '<span class="big">写真を読み込み中…</span>'
+        + '<span>サーバーに保存されている写真を取得しています</span>'
+        + '</div>';
+      return;
+    }
+    var rec = current ? data[current] : null;
+    var remote = !!(rec && !rec.photo && (rec.hasPhoto || rec.photoOff));
+    photoArea.innerHTML = '<div class="photo-drop" id="photoDrop" role="button" tabindex="0">'
+      + '<span class="big">' + (remote ? "サーバーから写真を読み込む" : "写真を選択") + '</span>'
+      + '<span>' + (remote ? "この端末には写真がありません（タップで取得）" : "クリックして1枚アップロード（JPG / PNG）") + '</span>'
+      + '</div>'
+      + '<div class="photo-actions" style="margin-top:10px">'
+      + (remote ? '<button type="button" class="chip" id="photoRetry">写真を読み込む</button>' : '')
+      + '<button type="button" class="chip" id="photoPick">別の写真を選ぶ</button>'
+      + '</div>';
+    function act(){ if(remote){ loadPhotoNow(); } else { photoInput.click(); } }
+    var drop = document.getElementById("photoDrop");
+    drop.onclick = act;
+    drop.onkeydown = function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); act(); } };
+    var rt = document.getElementById("photoRetry");
+    if(rt) rt.onclick = function(e){ e.stopPropagation(); loadPhotoNow(); };
+    document.getElementById("photoPick").onclick = function(e){ e.stopPropagation(); photoInput.click(); };
+  }
+  function loadPhotoNow(){
+    if(!current) return;
+    if(!syncEnabled()){ toast("同期が未設定のため、サーバーの写真を取得できません"); return; }
+    photoLoading = true; renderPhoto();
+    loadRoomPhoto(current).then(function(){
+      photoLoading = false;
+      pendingPhoto = (data[current] && data[current].photo) || null;
+      renderPhoto(); validate();
+      if(!pendingPhoto) toast("写真を取得できませんでした。時間をおいて再度お試しください");
+    });
+  }
+
+  function currentValues(){
+    var modelEl = document.querySelector('#modelChips .chip[aria-pressed="true"]');
+    var camEl = document.querySelector('#cameraChips .chip[aria-pressed="true"]');
+    return {
+      model: modelEl ? modelEl.dataset.model : "",
+      photo: pendingPhoto || "",
+      monitor: document.getElementById("monitorInput").value.trim(),
+      ac: document.getElementById("acInput").value.trim(),
+      camera: camEl ? camEl.dataset.camera : "",
+      cleanedOn: document.getElementById("dateInput").value,
+      cleaner: (function(){
+        var v = document.getElementById("cleanerSelect").value;
+        return (v && v !== "__new__") ? v : "";
+      })()
+    };
+  }
+
+  function missingList(v){
+    var miss = [];
+    if(!v.model) miss.push("機種・選択方式");
+    if(!v.photo && !photoLoading) miss.push("部屋の写真");
+    if(!v.monitor) miss.push("モニターの型番");
+    if(!v.ac) miss.push("エアコンの型番");
+    if(!v.camera) miss.push("カメラの有無");
+    if(!v.cleanedOn) miss.push("清掃実施日");
+    if(!v.cleaner) miss.push("清掃実施者");
+    return miss;
+  }
+
+  function validate(initial){
+    var v = currentValues();
+    var miss = missingList(v);
+    var ok = miss.length === 0;
+    var btn = document.getElementById("saveBtn");
+    btn.disabled = !ok;
+    btn.textContent = data[current] ? "上書き更新" : "登録する";
+    var list = document.getElementById("reqList");
+    if(ok){
+      list.className = "req-list ok";
+      list.textContent = "7項目すべて入力済み — 登録できます";
+    }else if(initial){
+      /* 開いた直後はエラー表示にしない */
+      list.className = "req-list muted";
+      list.textContent = "7項目すべてを入力すると登録できます";
+    }else{
+      list.className = "req-list";
+      list.textContent = "未入力：" + miss.join("・");
+    }
+    var inv = (initial || ok) ? "false" : "true";
+    document.getElementById("monitorInput").setAttribute("aria-invalid", v.monitor ? "false" : inv);
+    document.getElementById("acInput").setAttribute("aria-invalid", v.ac ? "false" : inv);
+    document.getElementById("cleanerSelect").setAttribute("aria-invalid", v.cleaner ? "false" : inv);
+    document.getElementById("dateInput").setAttribute("aria-invalid", v.cleanedOn ? "false" : inv);
+    document.getElementById("stateHint").textContent = ok
+      ? "すべて入力済みです。「" + (data[current] ? "上書き更新" : "登録する") + "」で保存します。"
+      : "未入力が " + miss.length + " 項目あります。7項目すべてで登録できます。";
+  }
+
+  function openRoom(no){
+    current = no;
+    var meta = ROOM_META[no] || {kanji:"—",h:"139,123,232"};
+    var rec = data[no];
+    pendingPhoto = rec && rec.photo ? rec.photo : null;
+
+    document.getElementById("sheetNo").textContent = no;
+    document.getElementById("sheetFloor").textContent = meta.kanji + "階";
+    var st = document.getElementById("sheetState");
+    st.textContent = rec ? "登録済" : "未登録";
+    st.className = "sheet-state" + (rec?" done":"");
+    document.querySelector(".sheet").style.setProperty("--h", meta.h);
+
+    document.querySelectorAll('#modelChips .chip').forEach(function(c){
+      c.setAttribute("aria-pressed", (rec && c.dataset.model===rec.model) ? "true" : "false");
+    });
+    document.querySelectorAll('#cameraChips .chip').forEach(function(c){
+      c.setAttribute("aria-pressed", (rec && c.dataset.camera===rec.camera) ? "true" : "false");
+    });
+    document.getElementById("monitorInput").value = rec ? rec.monitor : "";
+    document.getElementById("acInput").value = rec ? rec.ac : "";
+    buildStaffSelect(rec ? rec.cleaner : "", rec ? rec.cleaner : "");
+    document.getElementById("staffEditRow").hidden = true;
+    document.getElementById("staffNewInput").value = "";
+    document.getElementById("dateInput").value = rec ? rec.cleanedOn : todayValue();
+    document.getElementById("stampVal").textContent = rec ? rec.updatedAt : "— 登録時に記録";
+
+    var it = incidents[no];
+    var incOn = !!(it && it.on);
+    document.getElementById("incidentNotice").hidden = !incOn;
+    if(incOn){
+      document.getElementById("incidentNoticeText").textContent =
+        (it.text || "（内容未記入）") + "　／　登録 " + (it.at || "—") + "　—　異常事態モードで解除できます。";
+    }
+
+    photoLoading = false;
+    renderPhoto();
+    if(rec && !rec.photo && (rec.hasPhoto || rec.photoOff)){ loadPhotoNow(); }
+    validate(true);
+    overlay.hidden = false;
+    document.body.style.overflow = "hidden";
+    setTimeout(function(){ document.getElementById("modelChips").querySelector(".chip").focus(); }, 30);
+  }
+
+  function closeRoom(){
+    overlay.hidden = true;
+    document.body.style.overflow = "";
+    current = null;
+    pendingPhoto = null;
+    tryReload();
+  }
+
+  var toastTimer = null;
+  function toast(msg){
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 2600);
+  }
+
+  function save(){
+    var v = currentValues();
+    if(missingList(v).length) return;
+    if(!v.photo){
+      /* 写真が無い状態で送ると、サーバー側の写真まで消してしまうため止める */
+      toast(photoLoading
+        ? "写真を読み込み中です。少し待ってからもう一度お試しください"
+        : "この端末に写真がないため保存できません。「写真を読み込む」か、写真を選び直してください");
+      return;
+    }
+    var droppedBefore = photosDropped;
+    data[current] = {
+      model: v.model,
+      photo: v.photo,
+      hasPhoto: true,
+      photoOff: false,
+      monitor: v.monitor,
+      ac: v.ac,
+      camera: v.camera,
+      cleanedOn: v.cleanedOn,
+      cleaner: v.cleaner,
+      updatedAt: stampNow(),
+      rev: Date.now()
+    };
+    markDirty("room:"+current);
+    pushRoom(current);   /* 端末に保存できなくても、サーバーへは必ず送る（写真もこの時点で送信対象） */
+    var saved = persist();
+    var wasDropped = photosDropped - droppedBefore;
+    var no = current;
+    closeRoom();
+    render();
+    renderHead();
+    updateStorageInfo();
+    if(!saved){
+      toast(no + " を反映しましたが、保存容量の上限に達しました（画面を閉じると消えます）");
+    }else if(wasDropped > 0){
+      toast(no + " を登録しました（容量確保のため古い写真 " + wasDropped + "件を端末から外しました）");
+    }else{
+      toast(no + " を登録しました");
+    }
+    writeThrough(no);    /* その都度シートへ送り、シートの内容で表示を更新 */
+  }
+
+  var incOverlay = document.getElementById("incidentOverlay");
+  var incCurrent = null;
+
+  function openIncident(no){
+    incCurrent = no;
+    var meta = ROOM_META[no] || {kanji:"—",h:"139,123,232"};
+    var it = incidents[no];
+    var on = !!(it && it.on);
+    document.getElementById("incRoom").textContent = no;
+    document.getElementById("incFloor").textContent = meta.kanji + "階";
+    var st = document.getElementById("incState");
+    st.textContent = on ? "⚠ 発生中（解除できます）" : "正常";
+    st.className = "sheet-state" + (on ? " alarm" : " done");
+    document.getElementById("incTextInput").value = on ? (it.text || "") : "";
+    document.getElementById("incStamp").textContent = on ? (it.at || "—") : "— 登録時に記録";
+    document.getElementById("incClearBtn").hidden = !on;
+    validateIncident();
+    incOverlay.hidden = false;
+    document.body.style.overflow = "hidden";
+    setTimeout(function(){ document.getElementById("incTextInput").focus(); }, 30);
+  }
+  function closeIncident(){
+    incOverlay.hidden = true;
+    document.body.style.overflow = "";
+    incCurrent = null;
+    tryReload();
+  }
+  function validateIncident(){
+    var v = document.getElementById("incTextInput").value.trim();
+    var on = !!(incidents[incCurrent] && incidents[incCurrent].on);
+    document.getElementById("incSaveBtn").disabled = !v;
+    document.getElementById("incSaveBtn").textContent = on ? "更新する" : "登録する";
+    document.getElementById("incTextInput").setAttribute("aria-invalid", v ? "false" : "true");
+    var req = document.getElementById("incReq");
+    if(v){ req.className = "req-list ok"; req.textContent = "登録できます"; }
+    else { req.className = "req-list"; req.textContent = "一言を入力してください"; }
+  }
+  function saveIncident(){
+    var v = document.getElementById("incTextInput").value.trim();
+    if(!v || incCurrent === null) return;
+    var no = incCurrent;
+    var already = !!(incidents[no] && incidents[no].on);
+    incidents[no] = { on:true, text:v, at:stampNow(), rev:Date.now() };
+    markDirty("incident:"+no);
+    persistIncidents(); pushIncident(no);
+    closeIncident(); render(); renderCoverage();
+    toast(no + (already ? " の異常事態を更新しました" : " を異常事態として登録しました（使用不可）"));
+    writeThrough(no + " の異常事態");
+  }
+  function clearIncident(){
+    var no = incCurrent;
+    if(no === null) return;
+    if(!confirm(no + " の異常事態を解除して、使用可に戻します。よろしいですか？")) return;
+    incidents[no] = { on:false, text:"", at:null, rev:Date.now() };
+    markDirty("incident:"+no);
+    persistIncidents(); pushIncident(no);
+    closeIncident(); render(); renderCoverage();
+    toast(no + " を正常に戻しました（使用可）");
+    writeThrough(no + " の異常事態の解除");
+  }
+  document.getElementById("incSaveBtn").addEventListener("click", saveIncident);
+  document.getElementById("incClearBtn").addEventListener("click", clearIncident);
+  document.getElementById("incCancelBtn").addEventListener("click", closeIncident);
+  document.getElementById("incCloseBtn").addEventListener("click", closeIncident);
+  document.getElementById("incTextInput").addEventListener("input", validateIncident);
+  document.getElementById("incTextInput").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); if(!document.getElementById("incSaveBtn").disabled) saveIncident(); }
+  });
+  incOverlay.addEventListener("mousedown", function(e){ if(e.target === incOverlay) closeIncident(); });
+
+  function toggleWork(no){
+    if(incidents[no] && incidents[no].on){
+      toast(no + " は異常事態のため使用不可です（異常事態モードで解除できます）");
+      return;
+    }
+    if(work[no] && work[no].t){
+      work[no] = { t:null, rev:Date.now() };
+      markDirty("work:"+no);
+      persistWork(); pushWork(no); render(); renderCoverage();
+      toast(no + " の作業完了を取り消しました");
+      writeThrough(no + " の作業完了の取り消し");
+    }else{
+      work[no] = { t:hhmm(), rev:Date.now() };
+      markDirty("work:"+no);
+      persistWork(); pushWork(no); render(); renderCoverage();
+      toast(no + " を作業完了にしました");
+      writeThrough(no + " の作業完了");
+    }
+  }
+
+  function resetWork(){
+    var keys = Object.keys(work).filter(function(k){ return work[k] && work[k].t; });
+    if(!keys.length){ toast("作業完了の印はまだありません"); return; }
+    if(!confirm(keys.length + "件の作業完了を取り消します。よろしいですか？")) return;
+    var now = Date.now();
+    keys.forEach(function(k){ work[k] = { t:null, rev:now }; markDirty("work:"+k); });
+    persistWork();
+    keys.forEach(function(k){ pushWork(k); });
+    render(); renderCoverage();
+    toast("作業完了をすべて取り消しました");
+    writeThrough("作業完了の一括リセット");
+  }
+
+  /* ---------- 同期の中核：スプレッドシートの room_info が正 ---------- */
+  var CFG_KEY = KEY + "-sync-cfg";
+  var META_KEY = KEY + "-sync-meta";
+  var syncCfg = (function(){
+    var c = { url:"" };
+    try{ var r = localStorage.getItem(CFG_KEY); if(r) c = JSON.parse(r) || c; }catch(e){}
+    if(!c.url) c.url = "";
+    return c;
+  })();
+  function syncEnabled(){ return !!syncCfg.url; }
+
+  /* meta[key] = { seq:サーバーの版番号, rev:反映済みのローカルrev, dirty:未送信, snap:{前回のサーバー値} } */
+  var meta = {};
+  try{ var mraw2 = localStorage.getItem(META_KEY); if(mraw2) meta = JSON.parse(mraw2) || {}; }catch(e){}
+  function saveMeta(){ try{ localStorage.setItem(META_KEY, JSON.stringify(meta)); }catch(e){} }
+  function metaOf(key){ return meta[key] || { seq:0, rev:0, dirty:false, snap:{} }; }
+  function setMeta(key, seq, rev){ meta[key] = { seq:Number(seq||0), rev:Number(rev||0), dirty:false, snap:(meta[key] && meta[key].snap) || {} }; saveMeta(); }
+  function setSnap(key, snap){
+    var m = meta[key] || { seq:0, rev:0, dirty:false };
+    m.snap = snap || {}; meta[key] = m; saveMeta();
+  }
+  function mergeSnap(key, obj){
+    var m = meta[key] || { seq:0, rev:0, dirty:false, snap:{} };
+    var s = m.snap || {};
+    Object.keys(obj || {}).forEach(function(k){ s[k] = obj[k]; });
+    m.snap = s; meta[key] = m; saveMeta();
+  }
+  function markDirty(key){ var m = meta[key] || { seq:0, rev:0, snap:{} }; m.dirty = true; meta[key] = m; saveMeta(); }
+  function isDirty(key){
+    if(meta[key]) return !!meta[key].dirty;
+    if(key === "staff:list") return false;   /* 担当者リストはシートに持たない（H列から集める） */
+    return !!recOf(key);
+  }
+  function resetSyncMeta(){
+    meta = {}; saveMeta();
+    try{ localStorage.removeItem(KEY + "-sync-since"); }catch(e){}
+    try{ localStorage.removeItem(KEY + "-sync-queue"); }catch(e){}
+  }
+
+  /* この端末の名前 */
+  var DEV_KEY = KEY + "-device";
+  var device = (function(){
+    var d = null;
+    try{ var r = localStorage.getItem(DEV_KEY); if(r) d = JSON.parse(r) || null; }catch(e){}
+    if(!d || !d.id){
+      d = { id: "dev" + Math.random().toString(36).slice(2,7), label: "" };
+      try{ localStorage.setItem(DEV_KEY, JSON.stringify(d)); }catch(e){}
+    }
+    return d;
+  })();
+  function saveDevice(){ try{ localStorage.setItem(DEV_KEY, JSON.stringify(device)); }catch(e){} }
+  function authorName(){ return device.label ? (device.label + "(" + device.id + ")") : device.id; }
+
+  /* 競合の記録 */
+  var CONF_KEY = KEY + "-conflicts";
+  var conflictLog = [];
+  try{ var craw = localStorage.getItem(CONF_KEY); if(craw) conflictLog = JSON.parse(craw) || []; }catch(e){}
+  if(!Array.isArray(conflictLog)) conflictLog = [];
+  function saveConflicts(){ try{ localStorage.setItem(CONF_KEY, JSON.stringify(conflictLog.slice(-50))); }catch(e){} }
+
+  var syncBusy = false;
+  var syncState = { state:"idle", lastAt:null, msg:"", conflicts:0, serverVersion:null, serverOutdated:false, sheetCount:null };
+
+  /* ============================================================
+     通信：fetch(GET) を本線にする（iPhone では JSONP が動かないため）。
+     書き込みも GET（302転送で POST の本文が失われるため）。
+     ============================================================ */
+  var NET_TIMEOUT = 30000;
+  var jsonpSeq = 0;
+  function buildUrl(extra){
+    return syncCfg.url + (syncCfg.url.indexOf("?") >= 0 ? "&" : "?") + extra;
+  }
+  function withTimeout(promise, ms, label){
+    return new Promise(function(resolve, reject){
+      var done = false;
+      var t = setTimeout(function(){
+        if(!done){ done = true; reject(new Error(label || "応答がありません（タイムアウト）")); }
+      }, ms || NET_TIMEOUT);
+      promise.then(function(v){ if(!done){ done = true; clearTimeout(t); resolve(v); } },
+                   function(e){ if(!done){ done = true; clearTimeout(t); reject(e); } });
+    });
+  }
+  function parseLoose(text){
+    var t = String(text || "").trim();
+    if(!t) throw new Error("空の応答");
+    if(t.charAt(0) === "{" || t.charAt(0) === "[") return JSON.parse(t);
+    var m = t.match(/^[\w.$]+\(([\s\S]*)\)\s*;?$/);
+    if(m){ return JSON.parse(m[1]); }
+    throw new Error("データではない応答（ログイン画面の可能性）");
+  }
+  function jsonpGet(extra, timeoutMs){
+    return new Promise(function(resolve, reject){
+      var name = "__sheetcb" + (++jsonpSeq);
+      var url = buildUrl("cb=" + name + (extra ? "&" + extra : ""));
+      var sc = document.createElement("script");
+      var done = false;
+      function finish(fn, arg){
+        if(done) return; done = true;
+        try{ delete window[name]; }catch(e){ window[name] = undefined; }
+        if(sc.parentNode) sc.parentNode.removeChild(sc);
+        fn(arg);
+      }
+      window[name] = function(payload){ finish(resolve, { payload: payload || {} }); };
+      sc.onerror = function(){ finish(reject, new Error("読み込みに失敗しました（アクセスが『全員』かご確認ください）")); };
+      setTimeout(function(){ finish(reject, new Error("応答がありません（タイムアウト）")); }, timeoutMs || NET_TIMEOUT);
+      document.body.appendChild(sc);
+    });
+  }
+  function apiFetch(extra, timeoutMs){
+    var p = withTimeout(
+      fetch(buildUrl(extra), { method:"GET", mode:"cors", cache:"no-store", credentials:"omit" })
+        .then(function(res){
+          return res.text().then(function(txt){
+            if(!res.ok) throw new Error("HTTP " + res.status);
+            return parseLoose(txt);
+          });
+        }),
+      timeoutMs
+    );
+    return p.catch(function(){ return jsonpGet(extra, timeoutMs); }).then(function(out){
+      return (out && out.payload !== undefined) ? out.payload : out;
+    });
+  }
+  function noteServerVersion(payload){
+    if(!payload || typeof payload.version !== "number") return;
+    syncState.serverVersion = payload.version;
+    syncState.serverOutdated = payload.version < 6;
+  }
+  function apiGetRaw(extra, timeoutMs){
+    return apiFetch(extra, timeoutMs).then(function(payload){
+      if(payload && payload.ok === false) throw new Error(payload.error || "サーバーエラー");
+      noteServerVersion(payload);
+      if(payload && typeof payload.count === "number") syncState.sheetCount = payload.count;
+      var rows = (payload && payload.rows) ? payload.rows : (Array.isArray(payload) ? payload : []);
+      return { rows: rows, payload: payload || {} };
+    });
+  }
+  function apiGet(extra, timeoutMs){ return apiGetRaw(extra, timeoutMs).then(function(r){ return r.rows; }); }
+  function apiPing(){ return apiGetRaw("action=ping", 30000); }
+  function roomPairs(){
+    return ALL_ROOMS.map(function(no){
+      var m = ROOM_META[no] || {kanji:""};
+      return no + ":" + m.kanji;
+    }).join(",");
+  }
+  function apiInit(){ return apiGetRaw("action=init&rooms=" + encodeURIComponent(roomPairs())); }
+  function apiCleanup(){ return apiGetRaw("action=cleanup"); }
+  function countRooms_(rows){
+    var seen = {}, n = 0;
+    (rows || []).forEach(function(r){ var k = String((r && r.room) || ""); if(k && !seen[k]){ seen[k] = 1; n++; } });
+    return n;
+  }
+  /* 同期の取り込み：写真を除いた一覧（軽い） */
+  function apiPullAll(light){
+    return apiGet("action=list" + (light === false ? "" : "&light=1"));
+  }
+  function apiPullRoom(no){
+    return apiGet("action=list&keys=" + encodeURIComponent("room:" + no));
+  }
+  function apiPullKeys(keys){
+    if(!keys || !keys.length) return Promise.resolve([]);
+    var rooms = keys.map(function(k){ return String(k).split(":")[1]; }).filter(function(x){ return !!x; });
+    if(!rooms.length) return Promise.resolve([]);
+    return apiGet("action=list&light=1&keys=" + encodeURIComponent(rooms.join(",")));
+  }
+
+  /* --- 送信 --- */
+  /* 1回のGETのURLに載せられる目安。実測：8,000文字までは通り、12,000文字は 400 で弾かれる */
+  var MAX_URL_ENCODED = 6000;
+  function encodedSize(r){ return encodeURIComponent(JSON.stringify(r)).length; }
+  function splitByUrlLength(rows){
+    var out = [], cur = [], size = 0;
+    rows.forEach(function(r){
+      var n = encodedSize(r);
+      if(cur.length && (size + n > MAX_URL_ENCODED || cur.length >= 5)){ out.push(cur); cur = []; size = 0; }
+      cur.push(r); size += n;
+    });
+    if(cur.length) out.push(cur);
+    return out;
+  }
+  /* 送った内容がシートに入ったかを読み戻して確かめる（写真のように大きく、GETに載らない行用） */
+  function fieldsMatch(kind, sent, got){
+    sent = sent || {}; got = got || {};
+    function t(v){ return String(v === null || v === undefined ? "" : v).trim(); }
+    if(kind === "room"){
+      var names = ["model","monitor","ac","camera","cleanedOn","cleaner"];
+      for(var i=0;i<names.length;i++){
+        var k = names[i];
+        if(k in sent && t(sent[k]) !== t(got[k])) return false;
+      }
+      if(sent.photo && !got.hasPhoto) return false;
+      return true;
+    }
+    if(kind === "work") return t(sent.work) === t(got.work);
+    if(kind === "incident") return t(sent.incident) === t(got.incident);
+    return false;
+  }
+  /* 大きい行はPOST（本文）で送る。応答は読めないので、シートを読み戻して確認する。 */
+  function postBigRows(rows){
+    if(!rows.length) return Promise.resolve({ verified:[], unverified:[] });
+    return apiPostNoCors(rows).then(function(){
+      return withTimeout(apiPullKeys(rows.map(function(r){ return r.key; })), NET_TIMEOUT, "確認")
+        .then(function(list){
+          var byRoom = {};
+          (list || []).forEach(function(x){ byRoom[String(x.room)] = x; });
+          var verified = [], unverified = [];
+          rows.forEach(function(r){
+            var room = String(r.key).split(":")[1];
+            var s = byRoom[room];
+            if(s && fieldsMatch(r.kind, r.fields, s.fields)) verified.push({ row:r, seq:Number(s.seq || 0) });
+            else unverified.push(r);
+          });
+          return { verified: verified, unverified: unverified };
+        });
+    }, function(){ return { verified: [], unverified: rows }; });
+  }
+  function apiPostNoCors(rows){
+    return fetch(syncCfg.url, {
+      method:"POST", mode:"no-cors", cache:"no-store",
+      headers:{ "Content-Type":"text/plain;charset=utf-8" },
+      body: JSON.stringify({ action:"upsert", rows: rows, author: authorName() })
+    });
+  }
+  function apiUpsert(rows){
+    if(!rows.length) return Promise.resolve({ confirmed:true, applied:[], conflicts:[], oldServer:false });
+    var big = [], small = [];
+    rows.forEach(function(r){ (encodedSize(r) > MAX_URL_ENCODED ? big : small).push(r); });
+    var agg = { confirmed:true, applied:[], conflicts:[], oldServer:false, viaPost:0 };
+    var chain = splitByUrlLength(small).reduce(function(p, part){
+      return p.then(function(){
+        var q = "action=upsert&author=" + encodeURIComponent(authorName())
+              + "&rows=" + encodeURIComponent(JSON.stringify(part));
+        return withTimeout(
+          fetch(buildUrl(q), { method:"GET", mode:"cors", cache:"no-store", credentials:"omit" })
+            .then(function(res){
+              return res.text().then(function(txt){
+                var r = parseLoose(txt);
+                if(!r || r.ok !== true) throw new Error((r && r.error) || ("HTTP " + res.status));
+                if(!Array.isArray(r.applied)){
+                  var e = new Error("サーバーのコードが古いため保存できません（Apps Script を貼り替えて「新バージョン」で再デプロイしてください）");
+                  e.oldServer = true; throw e;
+                }
+                noteServerVersion(r);
+                return r;
+              });
+            }),
+          NET_TIMEOUT
+        ).then(function(r){
+          agg.applied = agg.applied.concat(r.applied || []);
+          agg.conflicts = agg.conflicts.concat(r.conflicts || []);
+        }).catch(function(err){
+          if(err && err.oldServer){ agg.oldServer = true; agg.confirmed = false; return null; }
+          agg.confirmed = false;
+          try{ return apiPostNoCors(part); }catch(e){ return null; }
+        });
+      });
+    }, Promise.resolve());
+    return chain.then(function(){
+      if(!big.length) return agg;
+      agg.viaPost = big.length;
+      return postBigRows(big).then(function(res){
+        res.verified.forEach(function(v){ agg.applied.push({ key:v.row.key, seq:v.seq }); });
+        if(res.unverified.length){ agg.confirmed = false; agg.unverified = res.unverified.length; }
+        return agg;
+      });
+    });
+  }
+
+  /* --- 送信キュー --- */
+  var QKEY = KEY + "-sync-queue";
+  var pushQueue = [];
+  try{ var qraw = localStorage.getItem(QKEY); if(qraw) pushQueue = JSON.parse(qraw) || []; }catch(e){}
+  if(!Array.isArray(pushQueue)) pushQueue = [];
+  function saveQueue(){ try{ localStorage.setItem(QKEY, JSON.stringify(pushQueue)); }catch(e){} }
+  function queueIndex(key){
+    for(var i = 0; i < pushQueue.length; i++){ if(pushQueue[i].key === key) return i; }
+    return -1;
+  }
+  function removeFromQueue(key){
+    for(var i = pushQueue.length - 1; i >= 0; i--){ if(pushQueue[i].key === key) pushQueue.splice(i, 1); }
+  }
+  function enqueue(rows){
+    if(!syncEnabled() || !rows || !rows.length) return;
+    rows.forEach(function(r){
+      var i = queueIndex(r.key);
+      if(i >= 0) pushQueue[i] = r; else pushQueue.push(r);
+    });
+    saveQueue(); updateSyncUI(); drainQueue();
+  }
+  function recOf(key){
+    var m = /^(room|work|incident):(.+)$/.exec(String(key||""));
+    if(!m) return null;
+    if(m[1] === "room") return data[m[2]] || null;
+    if(m[1] === "work") return work[m[2]] || null;
+    return incidents[m[2]] || null;
+  }
+  function applyConflicts(conflicts){
+    if(!conflicts || !conflicts.length) return;
+    var names = [];
+    conflicts.forEach(function(c){
+      conflictLog.push({ at: stampNow(), key: c.key, serverSeq: c.serverSeq, client: c.client, server: c.server });
+      names.push(String(c.key).replace(/^[a-z]+:/, ""));
+      var room = String(c.key).split(":")[1];
+      if(c.server && Object.keys(c.server).length){
+        applyRoomRow({ room: room, fields: c.server, seq: c.serverSeq, light: true }, true);
+      }
+    });
+    saveConflicts();
+    var shown = names.slice(0, 6).join("・") + (names.length > 6 ? " ほか" : "");
+    syncState.conflicts = (syncState.conflicts || 0) + conflicts.length;
+    toast("他の端末が先に更新していたため、" + shown + " は他の端末の内容を優先しました（競合記録に残しています）");
+  }
+  var draining = false;
+  function drainQueue(){
+    if(draining || !syncEnabled() || !pushQueue.length){ updateSyncUI(); return; }
+    draining = true;
+    var batch = pushQueue.slice(0, 40);
+    syncState.state = "syncing"; updateSyncUI();
+    var gotConflicts = [];
+    apiUpsert(batch).then(function(res){
+      if(res && res.ok === false) throw new Error(res.error || "サーバーエラー");
+      gotConflicts = res.conflicts || [];
+      var appliedMap = {};
+      (res.applied || []).forEach(function(a){ appliedMap[a.key] = a.seq; });
+      var conflictSet = {};
+      gotConflicts.forEach(function(c){ conflictSet[c.key] = true; });
+      var keep = [];
+      batch.forEach(function(r){
+        if(appliedMap[r.key] !== undefined){
+          var rev = r.rev || 0;
+          setMeta(r.key, appliedMap[r.key], rev);
+          if(r.kind === "room"){
+            mergeSnap(r.key, { model:r.fields.model, monitor:r.fields.monitor, ac:r.fields.ac, camera:r.fields.camera,
+              cleanedOn:r.fields.cleanedOn, cleaner:r.fields.cleaner, photo:metaOf(r.key).snap.photo });
+            if(r.fields.photo) mergeSnap(r.key, { photo:r.fields.photo });
+          }else if(r.kind === "work"){
+            mergeSnap(r.key, { work:r.fields.work });
+          }else if(r.kind === "incident"){
+            mergeSnap(r.key, { incident:r.fields.incident });
+          }
+          return;
+        }
+        if(conflictSet[r.key]) return;
+        if(res.confirmed){
+          r.tries = (r.tries || 0) + 1;
+          if(r.tries <= 5) keep.push(r);
+        }
+      });
+      saveMeta();
+      if(res.oldServer){
+        pushQueue = batch.concat(pushQueue.filter(function(r){ return batch.indexOf(r) < 0; }));
+        saveQueue();
+        syncState.state = "error";
+        syncState.msg = "サーバーのコードが古いため保存できません（Apps Script を「新バージョン」で再デプロイしてください）";
+        syncState.serverOutdated = true;
+      }else if(res.confirmed){
+        pushQueue = keep.concat(pushQueue.filter(function(r){ return batch.indexOf(r) < 0; }));
+      }else{
+        /* 応答を確認できなかった分は再送待ちに戻す（POSTは読み戻しで確認済みのものを除く） */
+        var keep3 = [];
+        batch.forEach(function(r){
+          if(appliedMap[r.key] !== undefined || conflictSet[r.key]) return;
+          r.tries = (r.tries || 0) + 1;
+          if(r.tries <= 5) keep3.push(r);
+        });
+        pushQueue = keep3.concat(pushQueue.filter(function(r){ return batch.indexOf(r) < 0; }));
+        saveQueue();
+      }
+    }).then(function(){
+      applyConflicts(gotConflicts);
+      saveMeta(); saveQueue();
+      draining = false;
+      syncState.state = pushQueue.length ? "pending" : "ok";
+      if(!pushQueue.length) syncState.lastAt = stampNow();
+      syncState.msg = pushQueue.length ? (pushQueue.length + "件を再送待ち") : "";
+      updateSyncUI();
+      if(pushQueue.length) setTimeout(drainQueue, 1500);
+    }).catch(function(err){
+      draining = false;
+      var keep = [];
+      batch.forEach(function(r){
+        r.tries = (r.tries || 0) + 1;
+        if(r.tries <= 5) keep.push(r);
+      });
+      pushQueue = keep.concat(pushQueue.filter(function(r){ return batch.indexOf(r) < 0; }));
+      saveQueue();
+      syncState.state = "error"; syncState.msg = (err && err.message) || "送信できません";
+      updateSyncUI();
+    });
+  }
+
+  /* --- 送信内容の組み立て（前回のサーバー値を prev として添える） --- */
+  function roomFields(no){
+    var r = data[no];
+    if(!r) return {};
+    return {
+      model: r.model || "", monitor: r.monitor || "", ac: r.ac || "",
+      camera: r.camera || "", cleanedOn: r.cleanedOn || "", cleaner: r.cleaner || ""
+    };
+  }
+  function prevFor(key, names){
+    var snap = metaOf(key).snap || {}, out = {};
+    names.forEach(function(n){ if(n in snap) out[n] = snap[n]; });
+    return out;
+  }
+  function pushRoom(no){
+    if(!data[no]) return;
+    if(metaOf("room:"+no).dirty !== true) return;
+    var f = roomFields(no);
+    f.floor = (ROOM_META[no] || {}).kanji || "";
+    if(data[no].photo) f.photo = data[no].photo;
+    enqueue([{ key:"room:"+no, kind:"room", fields:f,
+      prev:prevFor("room:"+no, ["model","monitor","ac","camera","cleanedOn","cleaner","photo"]),
+      rev:data[no].rev || Date.now() }]);
+  }
+  function pushWork(no){
+    var w = work[no]; if(!w) return;
+    var val = w.t || "";
+    enqueue([{ key:"work:"+no, kind:"work", fields:{ work:val, floor:(ROOM_META[no]||{}).kanji||"" },
+      prev:prevFor("work:"+no, ["work"]), rev:w.rev || Date.now() }]);
+  }
+  function pushIncident(no){
+    var it = incidents[no]; if(!it) return;
+    var val = it.on ? (it.text || "") : "";
+    enqueue([{ key:"incident:"+no, kind:"incident", fields:{ incident:val },
+      prev:prevFor("incident:"+no, ["incident"]), rev:it.rev || Date.now() }]);
+  }
+  function pushStaff(){ /* 担当者の候補は room_info のH列から集めるため、送信しません */ }
+  function collectDirty(){
+    var rows = [];
+    Object.keys(data).forEach(function(no){
+      if(!isDirty("room:"+no)) return;
+      var r = data[no], f = roomFields(no);
+      f.floor = (ROOM_META[no] || {}).kanji || "";
+      if(r.photo) f.photo = r.photo;
+      rows.push({ key:"room:"+no, kind:"room", fields:f,
+        prev:prevFor("room:"+no, ["model","monitor","ac","camera","cleanedOn","cleaner","photo"]),
+        rev:r.rev || Date.now() });
+    });
+    Object.keys(work).forEach(function(no){
+      if(!isDirty("work:"+no)) return;
+      var w = work[no];
+      rows.push({ key:"work:"+no, kind:"work", fields:{ work:w.t || "", floor:(ROOM_META[no]||{}).kanji||"" },
+        prev:prevFor("work:"+no, ["work"]), rev:w.rev || Date.now() });
+    });
+    Object.keys(incidents).forEach(function(no){
+      if(!isDirty("incident:"+no)) return;
+      var it = incidents[no];
+      rows.push({ key:"incident:"+no, kind:"incident", fields:{ incident: it.on ? (it.text||"") : "" },
+        prev:prevFor("incident:"+no, ["incident"]), rev:it.rev || Date.now() });
+    });
+    return rows;
+  }
+
+  /* --- サーバーの行を画面のデータへ反映 --- */
+  function applyRoomRow(row, force){
+    var changed = false;
+    var room = String(row.room || "").replace(/^room:/, "");
+    if(!room) return false;
+    var f = row.fields || {};
+    var seq = Number(row.seq || 0);
+
+    /* 部屋の情報 */
+    var rkey = "room:" + room;
+    if(force || queueIndex(rkey) < 0){
+      var cur = metaOf(rkey);
+      if(seq > cur.seq || (force && cur.dirty)){
+        var lrec = data[room];
+        var merged = {
+          model: f.model || "", monitor: f.monitor || "", ac: f.ac || "",
+          camera: f.camera || "",
+          cleanedOn: f.cleanedOn ? (isoFrom(f.cleanedOn) || f.cleanedOn) : "",
+          cleaner: f.cleaner || "",
+          updatedAt: row.updated_at || "",
+          photo: (lrec && lrec.photo) || null,
+          hasPhoto: !!f.hasPhoto || !!(lrec && lrec.photo),
+          rev: Date.now()
+        };
+        if(row.photo){ merged.photo = row.photo; }
+        merged.photoOff = !merged.photo && merged.hasPhoto;
+        /* 記入も写真も無い行は「未登録」のままにする（行が用意されただけで登録済にしない） */
+        if(!(merged.model || merged.monitor || merged.ac || merged.camera || merged.cleanedOn
+             || merged.cleaner || merged.photo || merged.hasPhoto)){
+          if(data[room]) { delete data[room]; changed = true; }
+        }else{
+          data[room] = merged;
+          changed = true;
+        }
+        setMeta(rkey, seq, merged.rev);
+        var snap = { model:merged.model, monitor:merged.monitor, ac:merged.ac, camera:merged.camera,
+                     cleanedOn:merged.cleanedOn, cleaner:merged.cleaner };
+        /* 写真は「サーバーが持っていると分かっている値」だけを記録する。
+           端末だけが持つ写真を prev に混ぜると、送信のたびに食い違い＝競合になり
+           行ごと拒否されて情報も写真も保存されなくなる。 */
+        if(row.photo) snap.photo = row.photo;
+        else if(f.hasPhoto === false) snap.photo = "";
+        setSnap(rkey, snap);
+        removeFromQueue(rkey);
+        /* サーバーに写真が無いのに端末に残っている写真は、送り直して復旧する */
+        if(f.hasPhoto === false && data[room] && data[room].photo && !data[room].photoOff){
+          markDirty(rkey);
+          pushRoom(room);
+        }
+      }
+    }
+    /* 作業完了 */
+    var wkey = "work:" + room;
+    if(force || queueIndex(wkey) < 0){
+      var cw = metaOf(wkey);
+      if(seq > cw.seq || (force && cw.dirty)){
+        var wv = String(f.work || "");
+        work[room] = { t: wv ? wv : null, rev: Date.now() };
+        setMeta(wkey, seq, work[room].rev); setSnap(wkey, { work: wv });
+        removeFromQueue(wkey);
+        changed = true;
+      }
+    }
+    /* 異常 */
+    var ikey = "incident:" + room;
+    if(force || queueIndex(ikey) < 0){
+      var ci = metaOf(ikey);
+      if(seq > ci.seq || (force && ci.dirty)){
+        var iv = String(f.incident || "");
+        incidents[room] = { on: !!iv, text: iv, at: iv ? (incidents[room] && incidents[room].at) || stampNow() : null, rev: Date.now() };
+        setMeta(ikey, seq, incidents[room].rev); setSnap(ikey, { incident: iv });
+        removeFromQueue(ikey);
+        changed = true;
+      }
+    }
+    return changed;
+  }
+  function applyRows(rows, force){
+    var changed = false;
+    (rows || []).forEach(function(row){ if(applyRoomRow(row, force)) changed = true; });
+    if(changed){ persist(); persistWork(); persistIncidents(); saveMeta(); saveQueue(); }
+    mergeStaffFromRows(rows);      /* 清掃実施者（H列）から担当者の候補を作り直す */
+    return changed;
+  }
+  function mergePhotos(rows){
+    var changed = false;
+    (rows||[]).forEach(function(row){
+      var room = String(row.room || "");
+      var rec = data[room];
+      if(!rec || !row.fields || !row.fields.photo) return;
+      rec.photo = row.fields.photo; rec.hasPhoto = true; rec.photoOff = false;
+      mergeSnap("room:"+room, { photo: rec.photo });
+      changed = true;
+    });
+    if(changed){ persist(); }
+    return changed;
+  }
+  function loadRoomPhoto(no){
+    if(!syncEnabled() || !no) return Promise.resolve(false);
+    return apiPullRoom(no).then(function(rows){
+      var hit = (rows||[]).filter(function(r){ return String(r.room) === String(no); });
+      return mergePhotos(hit);
+    });
+  }
+
+  function updateStorageInfo(){
+    var el = document.getElementById("storageInfo");
+    if(!el) return;
+    var n = storageBytes();
+    var pct = Math.min(100, Math.round(n / (5 * 1024 * 1024) * 100));
+    var photos = Object.keys(data).filter(function(no){ return data[no] && data[no].photo; }).length;
+    var off = Object.keys(data).filter(function(no){ return data[no] && !data[no].photo && (data[no].photoOff || data[no].hasPhoto); }).length;
+    el.textContent = "端末の保存使用量：約 " + (n / 1024 / 1024).toFixed(2) + " MB（目安上限 5MB の " + pct + "%）／ 写真 " + photos + "件"
+      + (off ? "、サーバー側のみ " + off + "件（部屋を開くと表示）" : "")
+      + (storageFull ? "　※容量不足のため、古い写真は端末に保存していません" : "");
+  }
+
+  function updateSyncUI(){
+    var el = document.getElementById("syncStatus");
+    var t = document.getElementById("syncStatusText");
+    if(!el || !t) return;
+    el.className = "sync-status";
+    if(!syncEnabled()){ t.textContent = "端末保存のみ（同期オフ）"; }
+    else if(syncState.state === "syncing"){ el.classList.add("syncing"); t.textContent = "同期中…"; }
+    else if(syncState.state === "error"){ el.classList.add("error"); t.textContent = "接続エラー：" + (syncState.msg || "原因不明"); }
+    else if(syncState.state === "pending" || pushQueue.length){ el.classList.add("syncing"); t.textContent = "未送信 " + pushQueue.length + "件（確認・再送中）"; }
+    else { el.classList.add("ok"); t.textContent = "同期オン（最終 " + (syncState.lastAt || "—") + "）"; }
+    var dot = document.getElementById("settingsDot");
+    if(dot){
+      dot.className = "settings-dot";
+      if(!syncEnabled()) dot.classList.add("off");
+      else if(syncState.state === "error") dot.classList.add("error");
+      else if(syncState.state === "syncing" || syncState.state === "pending" || pushQueue.length) dot.classList.add("syncing");
+      else dot.classList.add("ok");
+    }
+    var ds = document.getElementById("syncDialogStatus");
+    if(ds){
+      ds.textContent = syncEnabled()
+        ? (syncState.state === "error" ? "接続できません：" + (syncState.msg || "")
+           : "表示はスプレッドシートの room_info（1枚の表）の内容です。"
+             + (syncState.sheetCount !== null ? "シートの部屋数 " + syncState.sheetCount + "件。" : "")
+             + (sheetMirrorAt ? "最終取得 " + sheetMirrorAt + "。" : "")
+             + (syncState.serverVersion ? "サーバーのコード版 " + syncState.serverVersion
+                 + (syncState.serverOutdated ? "（要更新：6以上に）" : "（最新）") : ""))
+        : "未設定（この端末のみで動作）";
+    }
+    var ci = document.getElementById("conflictInfo");
+    if(ci){
+      ci.textContent = conflictLog.length
+        ? "競合の記録：" + conflictLog.length + "件（他端末の更新を優先した履歴。直近 " + conflictLog[conflictLog.length-1].at + "）"
+        : "競合の記録：なし（他端末と衝突した更新はありません）";
+    }
+    var dl = document.getElementById("deviceLabel");
+    if(dl && document.activeElement !== dl) dl.value = device.label || "";
+  }
+
+  /* 更新ボタン：送信せず、シート（room_info）の内容だけを読み出して表示する */
+  var refreshBusy = false;
+  var sheetMirrorAt = null;
+  function refreshFromSheet(manual){
+    if(!syncEnabled()){
+      if(manual) toast("同期が未設定です。⚙設定から接続してください");
+      return Promise.resolve(false);
+    }
+    if(refreshBusy) return Promise.resolve(false);
+    refreshBusy = true;
+    var btn = document.getElementById("refreshBtn");
+    var btn2 = document.getElementById("refreshBtn2");
+    if(btn){ btn.disabled = true; btn.classList.add("busy"); }
+    if(btn2){ btn2.disabled = true; }
+    syncState.state = "syncing"; syncState.msg = "シートから読み込み中"; updateSyncUI();
+    /* セッション初回の読み込みで「行の用意＋重複の整理」を1回だけ行う（重複はサーバー側で必ず1本に統合） */
+    var bootInit = false;
+    try{
+      if(!sessionStorage.getItem("sk3-roominfo-init")){ sessionStorage.setItem("sk3-roominfo-init","1"); bootInit = true; }
+    }catch(e){}
+    var pre = bootInit ? apiInit().catch(function(){ return null; }) : Promise.resolve(null);
+    return pre.then(function(){ return apiPullAll(true); }).then(function(rows){
+      if(countRooms_(rows) < ALL_ROOMS.length){
+        return apiInit().catch(function(){ return null; }).then(function(){ return apiPullAll(true); });
+      }
+      return rows;
+    }).then(function(rows){
+      applyRows(rows, true);            /* シートの内容を必ず反映（送信はしない） */
+      syncState.sheetCount = countRooms_(rows);
+      sheetMirrorAt = stampNow();
+      refreshBusy = false;
+      if(btn){ btn.disabled = false; btn.classList.remove("busy"); }
+      if(btn2){ btn2.disabled = false; }
+      syncState.state = pushQueue.length ? "pending" : "ok";
+      syncState.lastAt = stampNow(); syncState.msg = "";
+      updateSyncUI(); render(); renderHead(); renderCoverage(); updateStorageInfo();
+      if(manual){
+        var extraVer = syncState.serverOutdated ? "／サーバーのコードが古いため保存はできません（要デプロイ）" : "";
+        toast("シートから読み込みました（シートの部屋数 " + rows.length + "件）" + extraVer);
+      }
+      return true;
+    }).catch(function(err){
+      refreshBusy = false;
+      if(btn){ btn.disabled = false; btn.classList.remove("busy"); }
+      if(btn2){ btn2.disabled = false; }
+      syncState.state = "error"; syncState.msg = (err && err.message) || "接続できません";
+      updateSyncUI();
+      if(manual) toast("読み込めませんでした（" + (syncState.msg || "") + "）");
+      return false;
+    });
+  }
+
+  /* 送信キューがはけるまで待つ */
+  function queueSettled(){
+    return new Promise(function(resolve){
+      if(!syncEnabled()){ resolve({ ok:false, reason:"off" }); return; }
+      if(!pushQueue.length && !draining){ resolve({ ok:true }); return; }
+      var last = -1, stable = 0, ticks = 0;
+      var t = setInterval(function(){
+        ticks++;
+        if(!pushQueue.length && !draining){ clearInterval(t); resolve({ ok:true }); return; }
+        if(pushQueue.length === last) stable++; else { stable = 0; last = pushQueue.length; }
+        if(stable >= 8 || ticks > 120){ clearInterval(t); resolve({ ok:false, left: pushQueue.length }); }
+      }, 500);
+    });
+  }
+  /* 更新 → 即送信 → 完了確認 → シートから表示更新 */
+  var writeBusy = 0;
+  function writeThrough(label){
+    if(!syncEnabled()) return;
+    writeBusy++;
+    updateSyncUI();
+    queueSettled().then(function(res){
+      if(res && res.ok){
+        return refreshFromSheet(false).then(function(){
+          writeBusy--;
+          var extra = (syncState.conflicts ? "（競合 " + syncState.conflicts + "件は他の端末を優先）" : "");
+          toast(label + "：シートに保存しました" + extra);
+          syncState.lastAt = stampNow();
+          updateSyncUI();
+        });
+      }
+      writeBusy--;
+      updateSyncUI();
+      toast(label + "：シートへ送信できませんでした（未送信 " + pushQueue.length + "件。⚙設定でご確認ください）");
+    }).catch(function(err){
+      writeBusy--;
+      updateSyncUI();
+      toast(label + "：シートの確認に失敗しました（" + ((err && err.message) || "接続エラー") + "）");
+    });
+  }
+
+  function syncNow(reason, done){
+    if(!syncEnabled()){ syncState.state = "off"; updateSyncUI(); if(done) done(); return; }
+    if(syncBusy){ if(done) done(true); return; }
+    syncBusy = true; syncState.state = "syncing"; syncState.msg = ""; updateSyncUI();
+    apiPullAll(true).then(function(rows){
+      applyRows(rows, false);
+      syncState.sheetCount = countRooms_(rows);
+      enqueue(collectDirty());
+      drainQueue();
+      syncBusy = false;
+      syncState.state = pushQueue.length ? "pending" : "ok";
+      if(!pushQueue.length){ syncState.lastAt = stampNow(); sheetMirrorAt = stampNow(); }
+      updateSyncUI(); render(); renderCoverage(); updateStorageInfo();
+      if(done) done();
+    }).catch(function(err){
+      syncBusy = false;
+      syncState.state = "error"; syncState.msg = (err && err.message) || "接続できません";
+      updateSyncUI();
+      if(done) done(err);
+    });
+  }
+
+  /* シートの内容を正として、この端末の表示を作り直す */
+  function authorityPull(done){
+    if(!syncEnabled()){ toast("同期が未設定です"); if(done) done(new Error("未設定")); return; }
+    if(!confirm("スプレッドシート（room_info）の内容を正として、この端末の表示を合わせ直します。\nこの端末だけにある未送信の変更は失われます。よろしいですか？")){
+      if(done) done(new Error("cancel")); return;
+    }
+    syncState.state = "syncing"; syncState.msg = "シートの内容を取得中"; updateSyncUI();
+    apiPullAll(true).then(function(rows){
+      var oldPhotos = {};
+      Object.keys(data).forEach(function(no){ if(data[no] && data[no].photo) oldPhotos[no] = data[no].photo; });
+      data = {}; work = {}; incidents = {};
+      meta = {}; pushQueue = [];
+      applyRows(rows, true);
+      Object.keys(oldPhotos).forEach(function(no){
+        if(data[no] && !data[no].photo && !data[no].hasPhoto){ data[no].photo = oldPhotos[no]; data[no].photoOff = false; data[no].hasPhoto = true; }
+      });
+      saveMeta(); saveQueue(); persist(); persistWork(); persistIncidents(); persistStaff();
+      syncState.state = "ok"; syncState.lastAt = stampNow(); syncState.msg = "";
+      updateSyncUI(); render(); renderCoverage(); updateStorageInfo();
+      toast("シートの内容に合わせました（" + rows.length + "件）");
+      if(done) done();
+    }).catch(function(err){
+      syncState.state = "error"; syncState.msg = (err && err.message) || "接続できません";
+      updateSyncUI();
+      toast("取得できませんでした（" + (syncState.msg || "") + "）");
+      if(done) done(err);
+    });
+  }
+
+  function nowISO(){ return new Date().toISOString(); }
+
+  /* ---------- 自動更新（GitHub Actions が version.json を更新） ---------- */
+  var RELOAD_KEY = "sk3-reloaded-for";
+  var pendingReloadVersion = null;
+  function anyPopupOpen(){
+    try{
+      return !overlay.hidden || !incOverlay.hidden
+          || !document.getElementById("syncOverlay").hidden
+          || !document.getElementById("photoOverlay").hidden;
+    }catch(e){ return false; }
+  }
+  function reloadNow(v){
+    try{ sessionStorage.setItem(RELOAD_KEY, v); }catch(e){}
+    try{
+      var u = new URL(location.href);
+      u.searchParams.set("v", v);
+      location.replace(u.toString());
+    }catch(e){
+      location.replace(location.pathname + "?v=" + encodeURIComponent(v));
+    }
+  }
+  function tryReload(){
+    if(!pendingReloadVersion) return;
+    if(anyPopupOpen()) return;
+    reloadNow(pendingReloadVersion);
+  }
+  function checkVersion(){
+    if(String(BUILD_VERSION).indexOf("__") === 0) return;
+    if(typeof fetch !== "function") return;
+    fetch("version.json?t=" + Date.now(), { cache:"no-store" })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(j){
+        if(!j || !j.version) return;
+        if(j.version === BUILD_VERSION) return;
+        try{ if(sessionStorage.getItem(RELOAD_KEY) === j.version) return; }catch(e){}
+        if(anyPopupOpen()){ pendingReloadVersion = j.version; return; }
+        reloadNow(j.version);
+      })
+      .catch(function(){});
+  }
+
+  /* ---------- image handling ---------- */
+  /* 1セル（50,000文字）に収めるため、写真は40,000文字以内に自動縮小する */
+  var PHOTO_MAX_CHARS = 40000;
+  function fitDataUrl(url, cb){
+    if(!url || url.length <= PHOTO_MAX_CHARS){ cb(url); return; }
+    var img = new Image();
+    img.onload = function(){
+      var steps = [[520,0.55],[440,0.5],[360,0.45],[280,0.4],[200,0.3]], i = 0;
+      (function next(){
+        if(i >= steps.length){ cb(url); return; }
+        var st = steps[i++], sc = Math.min(1, st[0] / img.width);
+        var c = document.createElement("canvas");
+        c.width = Math.max(1, Math.round(img.width * sc));
+        c.height = Math.max(1, Math.round(img.height * sc));
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        var out = "";
+        try{ out = c.toDataURL("image/jpeg", st[1]); }catch(e){ out = ""; }
+        if(out && out.length <= PHOTO_MAX_CHARS){ cb(out); return; }
+        next();
+      })();
+    };
+    img.onerror = function(){ cb(url); };
+    img.src = url;
+  }
+  function readImage(file, cb){
+    var reader = new FileReader();
+    reader.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var maxW = 440, scale = Math.min(1, maxW / img.width);
+        var c = document.createElement("canvas");
+        c.width = Math.round(img.width*scale);
+        c.height = Math.round(img.height*scale);
+        c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+        var out;
+        try{ out = c.toDataURL("image/jpeg",0.5); }catch(e){ out = reader.result; }
+        fitDataUrl(out, cb);
+      };
+      img.onerror = function(){ fitDataUrl(reader.result, cb); };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /* ---------- events ---------- */
+  document.querySelectorAll(".tab").forEach(function(tab){
+    tab.addEventListener("click", function(){
+      mode = tab.dataset.mode;
+      /* ポップアップを閉じる処理が失敗しても、モード切替の描画は必ず実行する */
+      try{ if(mode !== "normal") closeRoom(); }catch(e){}
+      try{ if(mode !== "incident") closeIncident(); }catch(e){}
+      try{ if(mode !== "normal") closeSyncDialog(); }catch(e){}
+      document.querySelectorAll(".tab").forEach(function(t){ t.setAttribute("aria-selected", t===tab?"true":"false"); });
+      render(); renderHead();
+    });
+  });
+
+  document.getElementById("floors").addEventListener("click", function(e){
+    var cell = e.target.closest(".cell");
+    if(!cell || !cell.dataset.room) return;
+    if(mode==="work") toggleWork(cell.dataset.room);
+    else if(mode==="incident") openIncident(cell.dataset.room);
+    else openRoom(cell.dataset.room);
+  });
+
+
+  photoInput.addEventListener("change", function(){
+    var f = photoInput.files && photoInput.files[0];
+    if(!f) return;
+    readImage(f, function(url){ pendingPhoto = url; renderPhoto(); validate(); });
+    photoInput.value = "";
+  });
+
+  ["monitorInput","acInput","dateInput"].forEach(function(id){
+    document.getElementById(id).addEventListener("input", validate);
+    document.getElementById(id).addEventListener("change", validate);
+  });
+
+  document.getElementById("exportBtn").addEventListener("click", function(){
+    var d = new Date();
+    var name = "sanjo-rooms-" + d.getFullYear() + pad(d.getMonth()+1) + pad(d.getDate()) + ".json";
+    var blob = new Blob([JSON.stringify({version:1, exportedAt:stampNow(), rooms:data}, null, 2)], {type:"application/json"});
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+    toast("バックアップを書き出しました（" + Object.keys(data).length + "件）");
+  });
+
+  document.getElementById("workResetBtn").addEventListener("click", resetWork);
+
+  function shrinkAllPhotos(){
+    var rooms = Object.keys(data).filter(function(no){ return data[no] && data[no].photo; });
+    if(!rooms.length){ toast("縮小できる写真がありません（写真はサーバー側にあります）"); return; }
+    if(!confirm(rooms.length + "件の写真を縮小して保存容量を空けます。よろしいですか？")) return;
+    var i = 0;
+    (function next(){
+      if(i >= rooms.length){
+        var ok = persist();
+        render(); renderCoverage(); updateSyncUI(); updateStorageInfo();
+        toast(ok ? rooms.length + "件の写真を縮小しました（容量を確保しました）"
+                 : "縮小しましたが、まだ容量が不足しています。不要な写真を削除してください");
+        if(pushQueue.length) writeThrough("写真の縮小");
+        return;
+      }
+      var no = rooms[i++];
+      var img = new Image();
+      img.onload = function(){
+        var maxW = 360, sc = Math.min(1, maxW / img.width);
+        var c = document.createElement("canvas");
+        c.width = Math.round(img.width * sc); c.height = Math.round(img.height * sc);
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        var shrunk = "";
+        try{ shrunk = c.toDataURL("image/jpeg", 0.45); }catch(e){ shrunk = data[no].photo; }
+        fitDataUrl(shrunk, function(v){
+          data[no].photo = v;
+          data[no].rev = Date.now(); data[no].photoOff = false; data[no].hasPhoto = true;
+          markDirty("room:"+no);
+          pushRoom(no);
+          if(i % 10 === 0) persist();
+          next();
+        });
+      };
+      img.onerror = function(){ next(); };
+      img.src = data[no].photo;
+    })();
+  }
+  document.getElementById("shrinkBtn").addEventListener("click", shrinkAllPhotos);
+  document.getElementById("authorityBtn").addEventListener("click", function(){ authorityPull(); });
+  document.getElementById("deviceLabel").addEventListener("change", function(){
+    device.label = this.value.trim();
+    saveDevice();
+    toast(device.label ? ("この端末の名前を「" + device.label + "」にしました") : "端末名を空欄にしました（端末IDのみ記録）");
+  });
+
+  document.getElementById("cleanerSelect").addEventListener("change", function(){
+    if(this.value === "__new__"){
+      document.getElementById("staffEditRow").hidden = false;
+      document.getElementById("staffNewInput").focus();
+    }else{
+      document.getElementById("staffEditRow").hidden = true;
+    }
+    validate();
+  });
+
+  function addStaff(){
+    var inp = document.getElementById("staffNewInput");
+    var name = inp.value.trim();
+    if(!name){ toast("名前を入力してください"); inp.focus(); return; }
+    if(staff.some(function(x){ return x.name === name; })){
+      document.getElementById("cleanerSelect").value = name;
+      inp.value = ""; document.getElementById("staffEditRow").hidden = true;
+      toast(name + " はすでに登録されています"); validate(); return;
+    }
+    staffHidden = staffHidden.filter(function(n){ return n !== name; });
+    persistStaffHidden();
+    staff.push({ name:name, rev:Date.now(), src:"local" });
+    persistStaff();
+    inp.value = ""; document.getElementById("staffEditRow").hidden = true;
+    buildStaffSelect(name); validate();
+    toast(name + " を担当者リストに登録しました（この端末の候補に追加）");
+  }
+  document.getElementById("staffAddBtn").addEventListener("click", addStaff);
+  document.getElementById("staffNewInput").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); addStaff(); }
+  });
+  document.getElementById("staffCancelBtn").addEventListener("click", function(){
+    document.getElementById("staffEditRow").hidden = true;
+    document.getElementById("staffNewInput").value = "";
+    document.getElementById("cleanerSelect").value = "";
+    validate();
+  });
+  document.getElementById("staffDeleteBtn").addEventListener("click", function(){
+    var name = document.getElementById("cleanerSelect").value;
+    if(!name || name === "__new__"){ toast("削除する名前を選んでください"); return; }
+    if(!confirm(name + " を担当者リストから削除します。（過去の記録は残ります）")) return;
+    staff = staff.filter(function(x){ return x.name !== name; });
+    staffHidden = staffHidden.filter(function(n){ return n !== name; });
+    staffHidden.push(name);
+    persistStaffHidden(); persistStaff();
+    buildStaffSelect(""); validate();
+    toast(name + " を候補から外しました（この端末のみ。台帳の記録は残ります）");
+  });
+
+  function openSyncDialog(){
+    document.getElementById("syncUrlInput").value = syncCfg.url || "";
+    document.getElementById("syncTestResult").textContent = "";
+    updateStorageInfo();
+    updateSyncUI();
+    updateSyncUI();
+    document.getElementById("syncOverlay").hidden = false;
+  }
+  function closeSyncDialog(){ document.getElementById("syncOverlay").hidden = true; tryReload(); }
+  document.getElementById("syncBtn").addEventListener("click", openSyncDialog);
+  document.getElementById("syncCloseBtn").addEventListener("click", closeSyncDialog);
+  document.getElementById("syncOverlay").addEventListener("mousedown", function(e){ if(e.target === this) closeSyncDialog(); });
+  document.getElementById("refreshBtn").addEventListener("click", function(){ refreshFromSheet(true); });
+  document.getElementById("refreshBtn2").addEventListener("click", function(){ refreshFromSheet(true); });
+  document.getElementById("cleanupBtn").addEventListener("click", function(){
+    if(!syncEnabled()){ toast("同期が未設定です。⚙設定から接続してください"); return; }
+    if(!confirm("room_state / conflicts / room_conflicts / staff の各シートを削除します。\n台帳（room_info）だけになります。よろしいですか？")) return;
+    toast("古いシートを削除しています…");
+    apiCleanup().then(function(r){
+      var p = (r && r.payload) || {};
+      var del = (p.deleted && p.deleted.length) ? p.deleted.join("、") : "対象なし（すでに room_info だけです）";
+      toast("削除しました：" + del + "／残ったシート：" + ((p.sheets || []).join("、") || "—"));
+    }).catch(function(err){ toast("削除できませんでした（" + ((err && err.message) || "接続エラー") + "）"); });
+  });
+  document.getElementById("initTableBtn").addEventListener("click", function(){
+    if(!syncEnabled()){ toast("同期が未設定です。⚙設定から接続してください"); return; }
+    toast("部屋一覧を確認しています…");
+    var info = null;
+    apiInit().then(function(r){
+      info = (r && r.payload) || null;
+      return refreshFromSheet(false);
+    }).then(function(){
+      var extra = "";
+      if(info && (info.merged || info.deletedEmpty)){
+        extra = "／重複 " + (info.merged||0) + "行を統合、" + (info.deletedEmpty||0) + "行の空行を削除";
+      }
+      toast("room_info の部屋一覧を整えました（" + (syncState.sheetCount||0) + "室）" + extra);
+    }).catch(function(err){ toast("用意できませんでした（" + ((err && err.message) || "接続エラー") + "）"); });
+  });
+  document.getElementById("syncNowBtn").addEventListener("click", function(){
+    if(!syncEnabled()){ toast("同期が未設定です。設定画面から接続してください"); openSyncDialog(); return; }
+    syncNow("manual", function(err){ toast(err ? "同期できませんでした（" + (syncState.msg || "") + "）" : "スプレッドシートと同期しました"); });
+  });
+  document.getElementById("syncTestBtn").addEventListener("click", function(){
+    var out = document.getElementById("syncTestResult");
+    var url = document.getElementById("syncUrlInput").value.trim();
+    if(!url){ out.className = "req-list"; out.textContent = "WebアプリのURLを入力してください"; return; }
+    if(url.indexOf("script.google.com/macros/s/") < 0){
+      out.className = "req-list";
+      out.textContent = "URLが正しくないようです（https://script.google.com/macros/s/…/exec を貼り付けてください）";
+      return;
+    }
+    if(!/\/exec(\?|$)/.test(url)){
+      out.className = "req-list";
+      out.textContent = "URLの末尾が /exec になっていません。「/dev」のURLはほかの端末から使えません。「デプロイ」→「新しいデプロイ」で発行した /exec のURLを貼ってください";
+      return;
+    }
+    var saved = syncCfg.url;
+    syncCfg.url = url;
+    out.className = "req-list"; out.textContent = "確認中…（最大30秒。初回は1分ほどかかることがあります）";
+    apiPing().then(function(r){
+      var st = (r.payload && r.payload.serverTime) || "";
+      out.textContent = "サーバーに届きました" + (st ? "（" + String(st).replace("T"," ").slice(0,19) + " UTC）" : "") + "。台帳を読み出します…";
+      return apiPullAll(true).then(function(rows){
+        var ver = syncState.serverVersion;
+        out.className = "req-list ok";
+        out.textContent = "接続できました（シートの登録件数 " + rows.length + "件）"
+          + (ver ? "／サーバーのコード版 " + ver : "")
+          + (syncState.serverOutdated ? "　※この版では保存できません。Apps Script を貼り替えて「新バージョン」でデプロイしてください" : "");
+        document.getElementById("syncDialogStatus").textContent = "接続OK（シートの登録件数 " + rows.length + "件）";
+      });
+    }).then(function(){ syncCfg.url = saved; })
+      .catch(function(err){
+        out.className = "req-list";
+        out.textContent = "接続できません（" + ((err && err.message) || "原因不明") + "）／確認：①「デプロイを管理」でアクセスが『全員』か ②URLの末尾が /exec か ③保存後にバージョンを『新バージョン』でデプロイしたか";
+        syncCfg.url = saved;
+      });
+  });
+  document.getElementById("sheetCodeBtn").addEventListener("click", function(){
+    var code = document.getElementById("sheetCode").textContent;
+    function fallback(){
+      var r = document.createRange(); r.selectNodeContents(document.getElementById("sheetCode"));
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      toast("コードを選択しました。コピーしてください");
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(code).then(function(){ toast("Apps Scriptのコードをコピーしました"); }, fallback);
+    } else { fallback(); }
+  });
+  document.getElementById("syncSaveBtn").addEventListener("click", function(){
+    var url = document.getElementById("syncUrlInput").value.trim();
+    if(!url){ toast("WebアプリのURLを入力してください"); return; }
+    syncCfg = { url:url };
+    try{ localStorage.setItem(CFG_KEY, JSON.stringify(syncCfg)); }catch(e){}
+    resetSyncMeta();
+    syncState.state = "idle"; syncState.lastAt = null; syncState.msg = ""; syncState.conflicts = 0;
+    updateSyncUI(); closeSyncDialog();
+    toast("同期を設定しました。サーバー（スプレッドシート）を基準に突き合わせます…");
+    syncNow("config", function(err){ toast(err ? "同期できませんでした（" + (syncState.msg || "") + "）" : "同期しました（この端末のデータもシートへ反映）"); });
+  });
+  document.getElementById("syncOffBtn").addEventListener("click", function(){
+    if(!confirm("この端末をスプレッドシート同期から切り離します。端末内のデータは残ります。よろしいですか？")) return;
+    syncCfg = { url:"" };
+    try{ localStorage.removeItem(CFG_KEY); }catch(e){}
+    resetSyncMeta();
+    syncState.state = "off"; syncState.msg = ""; updateSyncUI();
+    closeSyncDialog(); toast("この端末のみの動作に戻しました");
+  });
+
+  window.addEventListener("focus", function(){ syncNow("focus"); checkVersion(); });
+  document.addEventListener("visibilitychange", function(){
+    if(document.visibilityState === "visible"){ syncNow("visible"); checkVersion(); }
+  });
+  window.addEventListener("online", function(){ syncNow("online"); });
+  setInterval(function(){
+    if(document.visibilityState === "visible"){ syncNow("interval"); checkVersion(); }
+  }, 30000);
+
+  document.getElementById("importBtn").addEventListener("click", function(){
+    document.getElementById("importInput").click();
+  });
+
+  document.getElementById("importInput").addEventListener("change", function(){
+    var f = this.files && this.files[0];
+    if(!f) return;
+    var r = new FileReader();
+    r.onload = function(){
+      var obj;
+      try{ obj = JSON.parse(r.result); }
+      catch(e){ toast("読み込めませんでした（JSON形式が不正です）"); return; }
+      var rooms = obj && obj.rooms ? obj.rooms : obj;
+      if(!rooms || typeof rooms !== "object"){ toast("読み込めませんでした（部屋データが見つかりません）"); return; }
+      var n = Object.keys(rooms).length;
+      if(!confirm(n + "件のデータで上書きします。よろしいですか？")) return;
+      data = rooms;
+      var ok = persist();
+      render(); renderHead();
+      toast(ok ? n + "件のデータを読み込みました" : "読み込みましたが、この端末には保存できませんでした");
+    };
+    r.readAsText(f);
+    this.value = "";
+  });
+
+  document.getElementById("saveBtn").addEventListener("click", save);
+  document.getElementById("cancelBtn").addEventListener("click", closeRoom);
+  document.getElementById("closeBtn").addEventListener("click", closeRoom);
+  overlay.addEventListener("mousedown", function(e){ if(e.target===overlay) closeRoom(); });
+  document.addEventListener("keydown", function(e){
+    if(e.key !== "Escape") return;
+    if(!photoOverlay.hidden){ closePhoto(); return; }
+    if(!overlay.hidden) closeRoom();
+    if(!incOverlay.hidden) closeIncident();
+  });
+
+  /* ---------- boot ---------- */
+  buildModelChips();
+  buildCameraChips();
+  buildStaffSelect("");
+  renderPhoto();
+  normalizeDates();
+  render();
+  renderHead();
+  updateSyncUI();
+  /* 予期しないエラーを画面上に出す（原因の切り分けを早くする） */
+  window.addEventListener("error", function(ev){
+    try{ toast("エラーが発生しました：" + ((ev && ev.message) || "原因不明")); }catch(e){}
+  });
+  checkVersion();
+  if(syncEnabled()){
+    /* 起動直後はシートの内容を正として一度取り込み、端末の食い違いを解消する */
+    refreshFromSheet(false).then(function(){
+      if(collectDirty().length) syncNow("boot");
+      else { render(); renderHead(); renderCoverage(); }
+    });
+  }
+
+  window.__seed = function(room, photoUrl, cleanedOn){
+    data[room] = {
+      model:"JMG", photo:photoUrl||"", monitor:"SHARP LC-32E9", ac:"DAIKIN S28ATES",
+      camera:"有", cleanedOn: cleanedOn || todayValue(), cleaner:"山田 太郎", updatedAt:stampNow(), rev:Date.now()
+    };
+    persist(); render(); renderCoverage();
+  };
+  window.__staff = function(names){
+    names.forEach(function(n){ staff.push({ name:n, rev:Date.now() }); });
+    persistStaff(); buildStaffSelect("");
+  };
+  window.__syncDialog = function(){ openSyncDialog(); };
+  window.__demo = function(room, photoUrl){
+    if(photoUrl) window.__seed(room, photoUrl);
+    openRoom(room);
+  };
+  window.__buildVersion = function(){ return BUILD_VERSION; };
+  window.__checkVersion = function(){ checkVersion(); };
+  window.__syncState = function(){ return syncState; };
+  window.__queue = function(){ return pushQueue.slice(); };
+  window.__push = function(no){ markDirty("room:"+no); pushRoom(no); return queueSettled(); };
+  window.__refresh = function(){ return refreshFromSheet(true); };
+  window.__photo = function(src, caption){ openPhoto(src, caption); };
+  window.__mode = function(m){ document.querySelector('.tab[data-mode="'+m+'"]').click(); };
+  window.__incidentSet = function(no, text){
+    incidents[no] = { on:true, text:text || "テスト異常", at:stampNow(), rev:Date.now() };
+    persistIncidents(); render(); renderCoverage();
+  };
+  window.__incidentDialog = function(no){ openIncident(no); };
+  window.__work = function(no){ toggleWork(no); };
+})();
+</script>
+</body>
+</html>
